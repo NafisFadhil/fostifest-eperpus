@@ -43,9 +43,7 @@ class MasterBukuController extends Controller
                 $item->categories_name = $item->categories->pluck('name')->implode(', ');
 				$buttonHtml =
 					'<a href="' . route('master-buku.edit', $item->id) . '" class="btn btn-icon btn-warning btn-sm mx-1" title="Edit Data"><i class="fas fa-edit"></i></a>'
-					. '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->title . '" class="btn btn-icon btn-danger btn-sm mx-1 btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></button>'
-
-					. '<a href="' . route('master-buku.show', $item->id) . '" class="btn btn-icon btn-primary btn-sm mx-1" title="Detail Data"><i class="fas fa-eye"></i></a>';
+					. '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->title . '" class="btn btn-icon btn-danger btn-sm mx-1 btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></button>';
 
 				$item->action = $buttonHtml;
 			}
@@ -194,7 +192,7 @@ class MasterBukuController extends Controller
         return view('admin.buku.edit', compact('data'));
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
         DB::beginTransaction();
         try {
@@ -208,7 +206,7 @@ class MasterBukuController extends Controller
                 'sampul' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
                 'tags' => 'required|string',
                 'tanggal_publish' => 'required|date',
-                'old_kode_buku.*' => 'required|string|unique:ms_book_code,code,' . $request->id . ',book_id',
+                'old_kode_buku.*' => 'required|string|unique:ms_book_code,code,' . $id . ',book_id',
                 'old_tgl_publish.*' => 'required|date',
                 'kode_buku.*' => 'required|string|unique:ms_book_code,code,',
                 'tgl_publish.*' => 'required|date',
@@ -263,7 +261,7 @@ class MasterBukuController extends Controller
                 $path_name = 'images/buku/' . $sampul_name;
                 $sampul->move(public_path('images/buku'), $sampul_name);
             } else {
-                $old_image = Book::find($request->id);
+                $old_image = Book::find($id);
                 $path_name = $old_image->cover;
             }
 
@@ -297,7 +295,7 @@ class MasterBukuController extends Controller
             }
 
             // Handle book codes update or deletion
-            $book_codes = BookCode::where('book_id', $request->id)->get();
+            $book_codes = BookCode::where('book_id', $id)->get();
             foreach ($book_codes as $book_code) {
                 if (in_array($book_code->id, $request->old_id_kode)) {
                     $key = array_search($book_code->id, $request->old_id_kode);
@@ -315,7 +313,7 @@ class MasterBukuController extends Controller
                 foreach ($request->kode_buku as $key => $value) {
                     BookCode::create([
                         'id' => Str::uuid(),
-                        'book_id' => $request->id,
+                        'book_id' => $id,
                         'code' => $value,
                         'status' => 1,
                         'publish_date' => $request->tgl_publish[$key],
@@ -324,7 +322,7 @@ class MasterBukuController extends Controller
             }
 
             // Update the book details
-            $book = Book::find($request->id); // Retrieve the book model
+            $book = Book::find($id); // Retrieve the book model
             $book->update([
                 'title' => $request->nama_buku,
                 'cover' => $path_name,
@@ -339,7 +337,7 @@ class MasterBukuController extends Controller
             $book->categories()->detach();
 
             // Attach the new categories to the book
-            $book->categories()->attach($categoryIds, ['book_id' => $request->id]);
+            $book->categories()->attach($categoryIds, ['book_id' => $id]);
 
             DB::commit();
 

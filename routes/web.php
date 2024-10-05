@@ -60,12 +60,13 @@ Route::middleware(['auth'])->group(function () {
 
 
     //Buku
-    Route::get('buku', [App\Http\Controllers\MasterBukuController::class, 'index'])->name('master-buku.index');
-    Route::get('buku/show/{id}', [App\Http\Controllers\MasterBukuController::class, 'show'])->name('master-buku.show');
     Route::get('buku/data', [App\Http\Controllers\MasterBukuController::class, 'data'])->name('master-buku.data');
-    Route::get('buku/create', [App\Http\Controllers\MasterBukuController::class, 'create'])->name('master-buku.create');
-    Route::get('buku/edit/{id}', [App\Http\Controllers\MasterBukuController::class, 'edit'])->name('master-buku.edit');
-    Route::post('buku/store', [App\Http\Controllers\MasterBukuController::class, 'store'])->name('master-buku.store');
-    Route::post('buku/update', [App\Http\Controllers\MasterBukuController::class, 'update'])->name('master-buku.update');
-    Route::delete('buku/delete/{id}', [App\Http\Controllers\MasterBukuController::class, 'destroy'])->name('master-buku.delete');
+    Route::resource('buku', App\Http\Controllers\MasterBukuController::class)->names([
+        'index' => 'master-buku.index',
+        'create' => 'master-buku.create',
+        'edit' => 'master-buku.edit',
+        'store' => 'master-buku.store',
+        'update' => 'master-buku.update',
+        'destroy' => 'master-buku.delete',
+    ])->except('show');
 });

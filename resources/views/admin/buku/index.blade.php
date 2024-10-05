@@ -110,19 +110,21 @@
 
     // Show confirmation dialog using SweetAlert
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to delete the book "' + bookName + '"?',
+        title: 'Apakah anda yakin?',
+        text: 'Apakah anda yakin ingin menghapus buku "' + bookName + '"?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel'
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
             // Proceed with the deletion via AJAX
+            var url = '{{ route('master-buku.delete', ':id') }}';
+            url = url.replace(':id', bookId);
             $.ajax({
-                url: '/buku/delete/' + bookId,  // URL for the delete route
+                url: url,  // URL for the delete route
                 type: 'DELETE',
                 data: {
                     "_token": "{{ csrf_token() }}"  // Pass the CSRF token for security
@@ -130,7 +132,7 @@
                 success: function(response) {
                     if (response.status) {
                         Swal.fire(
-                            'Deleted!',
+                            'Berhasil!',
                             response.message,
                             'success'
                         ).then(() => {
@@ -148,7 +150,7 @@
                 error: function(xhr, status, error) {
                     Swal.fire(
                         'Error!',
-                        'There was a problem deleting the book. Please try again later.',
+                        'Terjadi kesalahan saat menghapus buku. Silahkan hubungi administrator.',
                         'error'
                     );
                 }
