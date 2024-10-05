@@ -197,6 +197,7 @@ class MasterBukuController extends Controller
 
     public function update(Request $request)
     {
+        dd($request->all());
         DB::beginTransaction();
         try {
             // Validate the request
@@ -207,6 +208,40 @@ class MasterBukuController extends Controller
                 'min_poin' => 'required|integer',
                 'max_hari_peminjaman' => 'required|integer',
                 'sampul' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
+                'tags' => 'required|string',
+                'tanggal_publish' => 'required|date',
+                'old_kode_buku.*' => 'required|string|unique:ms_book_code,code,' . $request->id . ',book_id',
+                'old_tgl_publish.*' => 'required|date',
+                'kode_buku.*' => 'required|string|unique:ms_book_code,code,',
+                'tgl_publish.*' => 'required|date',
+            ], [
+                'nama_buku.required' => 'Nama harus diisi',
+                'nama_buku.max' => 'Maksimal 255 karakter',
+                'nama_buku.string' => 'Harus berupa teks',
+                'deskripsi.required' => 'Deskripsi harus diisi',
+                'deskripsi.max' => 'Maksimal 255 karakter',
+                'deskripsi.string' => 'Harus berupa teks',
+                'max_poin.required' => 'Max Poin harus diisi',
+                'max_poin.integer' => 'Max Poin harus berupa angka',
+                'min_poin.required' => 'Min Poin harus diisi',
+                'min_poin.integer' => 'Min Poin harus berupa angka',
+                'max_hari_peminjaman.required' => 'Max Hari Peminjaman harus diisi',
+                'max_hari_peminjaman.integer' => 'Max Hari Peminjaman harus berupa angka',
+                'sampul.max' => 'Maksimal 2048 karakter',
+                'tags.required' => 'Tag harus diisi',
+                'tags.string' => 'Tag harus berupa teks',
+                'tanggal_publish.required' => 'Tanggal Publish harus diisi',
+                'tanggal_publish.date' => 'Tangal Publish harus berupa tanggal',
+                'old_kode_buku.*.required' => 'Kode Buku harus diisi',
+                'old_kode_buku.*.string' => 'Kode Buku harus berupa teks',
+                'old_kode_buku.*.unique' => 'Kode Buku sudah ada',
+                'old_tgl_publish.*.required' => 'Tgl Publish harus diisi',
+                'old_tgl_publish.*.date' => 'Tgl Publish harus berupa tanggal',
+                'kode_buku.*.required' => 'Kode Buku harus diisi',
+                'kode_buku.*.string' => 'Kode Buku harus berupa teks',
+                'kode_buku.*.unique' => 'Kode Buku sudah ada',
+                'tgl_publish.*.required' => 'Tgl Publish harus diisi',
+                'tgl_publish.*.date' => 'Tgl Publish harus berupa tanggal',
             ]);
 
             if ($validator->fails()) {

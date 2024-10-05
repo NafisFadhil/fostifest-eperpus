@@ -131,7 +131,7 @@
             e.preventDefault(); // Prevent default form submission
             let newRow = `<tr>
                             <td><input type="text" name="kode_buku[]" class="form-control" placeholder="Masukkan Kode Buku"></td>
-                            <td><input type="date" name="tgl_publish[]" class="form-control" placeholder="Masukkan Tanggal Publish"></td>
+                            <td><input type="date" name="tgl_publish[]" class="form-control" value="{{ date('Y-m-d') }}" placeholder="Masukkan Tanggal Publish"></td>
                             <td><button type="button" class="btn btn-icon btn-danger remove-kode"><i class="fas fa-trash"></i></button></td>
                         </tr>`;
             $('#append-kode').append(newRow); // Append the new row
