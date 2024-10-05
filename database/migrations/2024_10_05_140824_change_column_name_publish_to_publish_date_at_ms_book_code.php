@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->uuid('kelas_id')->nullable()->after('id');
-						$table->foreign('kelas_id')->references('id')->on('ms_kelas');
+        Schema::table('ms_book_code', function (Blueprint $table) {
+            $table->renameColumn('publish', 'publish_date');
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['kelas_id']);
-						$table->dropColumn('kelas_id');
+        Schema::table('ms_book_code', function (Blueprint $table) {
+            $table->renameColumn('publish_date', 'publish');
         });
     }
 };

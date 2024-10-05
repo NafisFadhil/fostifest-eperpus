@@ -337,7 +337,7 @@ return [
 			'can' => ['siswa'],
 		],
 		[
-			'header' => 'Zona Admin',
+			'header' => 'Peminjaman & Pengembalian',
 			'can' => ['superadmin', 'admin'],
 		],
 		// [
@@ -351,19 +351,19 @@ return [
 		//     'icon' => 'fas fa-fw fa-lock',
 		// ],
         [
-            'text' => 'Laporan',
+            'text' => 'Transaksi',
             'icon' => 'fas fa-fw fa-file-alt',
             'can' => ['superadmin', 'admin'],
             'submenu' => [
                 [
-                    'text' => 'Harian',
-                    'url' => 'laporan-harian',
+                    'text' => 'Peminjaman',
+                    'url' => 'master-peminjaman',
                     // 'icon' => 'fas fa-fw fa-school',
                     'can' => ['superadmin', 'admin']
                 ],
                 [
-                    'text' => 'Bulanan',
-                    'url' => 'laporan-bulanan',
+                    'text' => 'Pengembalian',
+                    'url' => 'master-pengembalian',
                     // 'icon' => 'fas fa-fw fa-school',
                     'can' => ['superadmin', 'admin']
                 ],
@@ -388,17 +388,17 @@ return [
 			'can' => 'superadmin',
 			'submenu' => [
 				[
-					'text' => 'Kelas',
-					'url' => 'kelas',
+					'text' => 'Buku',
+					'url' => 'buku',
 					// 'icon' => 'fas fa-fw fa-school',
 					'can' => 'superadmin'
 				],
-				[
-					'text' => 'User',
-					'url' => 'user',
-					// 'icon' => 'fas fa-fw fa-users',
-					'can' => 'superadmin'
-				],
+				// [
+				// 	'text' => 'User',
+				// 	'url' => 'user',
+				// 	// 'icon' => 'fas fa-fw fa-users',
+				// 	'can' => 'superadmin'
+				// ],
 				// [
 				// 	'text' => 'level_one',
 				// 	'url' => '#',
@@ -645,6 +645,16 @@ return [
 					'type' => 'js',
 					'asset' => false,
 					'location' => '//cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js',
+				],
+			],
+		],
+		'tagify JS' => [
+			'active' => true,
+			'files' => [
+				[
+					'type' => 'js',
+					'asset' => false,
+					'location' => '//cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.min.js',
 				],
 			],
 		],

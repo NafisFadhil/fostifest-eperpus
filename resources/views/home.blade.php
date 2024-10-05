@@ -64,9 +64,9 @@
                                 <div class="form-label">Kelas</div>
                                 <select name="kelas" class="form-control select2" data-dropdown-css-class="" style="width: 100%;" id="kelas" data-placeholder="Kelas" placeholder="Kelas">
                                     <option value="all" selected>Semua Kelas</option>
-                                    @foreach ($kelas as $item)
+                                    {{-- @foreach ($kelas as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                             </div>
                             <div class="col-lg-2">
