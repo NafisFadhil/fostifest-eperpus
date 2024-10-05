@@ -18,6 +18,7 @@
           </div>
           <!-- /.card-header -->
           <form id="quickForm">
+            @csrf
             <div class="card-body">
               <div class="row">
                 <div class="form-group col-md-6">
@@ -154,9 +155,6 @@
                     if (result.isConfirmed) {
                         // Create a new FormData object to include form data
                         var formData = new FormData(form[0]);
-
-                        // Add the CSRF token to the form data
-                        formData.append('_token', $('input[name="_token"]').val());
 
                         // Perform AJAX form submission
                         $.ajax({

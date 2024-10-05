@@ -18,7 +18,8 @@
           </div>
           <!-- /.card-header -->
           <form id="quickForm">
-            <input type="hidden" name="id" value="{{ $data->id }}">
+            @csrf
+            @method('PUT')
             <div class="card-body">
               <div class="row">
                 <div class="form-group col-md-6">
@@ -163,12 +164,9 @@
                         // Create a new FormData object to include form data
                         var formData = new FormData(form[0]);
 
-                        // Add the CSRF token to the form data
-                        formData.append('_token', $('input[name="_token"]').val());
-
                         // Perform AJAX form submission
                         $.ajax({
-                            url: '{{ route('master-buku.update') }}',
+                            url: '{{ route('master-buku.update', $data) }}',
                             method: 'POST',
                             data: formData,
                             processData: false,
