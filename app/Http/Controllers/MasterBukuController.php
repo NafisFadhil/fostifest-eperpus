@@ -58,7 +58,6 @@ class MasterBukuController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
             // Validate the input
@@ -197,7 +196,6 @@ class MasterBukuController extends Controller
 
     public function update(Request $request)
     {
-        dd($request->all());
         DB::beginTransaction();
         try {
             // Validate the request
