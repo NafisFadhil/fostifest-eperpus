@@ -26,9 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::orderBy('name', 'asc')->get();
-        $absen = Attendance::where('user_id', auth()->user()->id)->whereDate('date_in', Carbon::now())->first();
-        return view('home', compact('absen', 'kelas'));
+        return view('home');
     }
 
     public function data(Request $request)

@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_izin', function (Blueprint $table) {
+        Schema::create('ms_book', function (Blueprint $table) {
             $table->uuid('id')->primary();
-						$table->uuid('user_id');
-						$table->date('tanggal');
-						$table->string('keterangan');
-						$table->string('attachment');
-						$table->integer('qty');
+            $table->uuid('category_id');
+            $table->string('title');
+            $table->string('cover');
+            $table->text('description');
+            $table->integer('max_points');
+            $table->integer('min_points');
+            $table->date('max_borrow_day');
+            $table->date('publish_date');
             $table->timestamps();
-
-						$table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_izin');
+        Schema::dropIfExists('ms_book');
     }
 };

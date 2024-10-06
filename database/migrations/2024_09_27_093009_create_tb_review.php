@@ -11,9 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ms_kelas', function (Blueprint $table) {
+        Schema::create('tb_review', function (Blueprint $table) {
             $table->uuid('id')->primary();
-						$table->string('name');
+            $table->uuid('loan_id');
+            $table->uuid('user_id');
+            $table->text('review');
+            $table->string('rating')->nullable();
+            $table->text('summary')->nullable();
+            $table->integer('ponits');
+            $table->tinyInteger('status');
+            $table->uuid('accepted_by');
             $table->timestamps();
         });
     }
@@ -23,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ms_kelas');
+        Schema::dropIfExists('tb_review');
     }
 };

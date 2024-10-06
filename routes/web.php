@@ -88,4 +88,16 @@ Route::middleware(['auth'])->group(function () {
     //Laporan Bulanan
     Route::get('laporan-bulanan', [App\Http\Controllers\LaporanBulananController::class, 'index'])->name('laporan_bulanan.index');
     Route::get('laporan-bulanan/data', [App\Http\Controllers\LaporanBulananController::class, 'data'])->name('laporan_bulanan.data');
+
+
+    //Buku
+    Route::get('buku/data', [App\Http\Controllers\MasterBukuController::class, 'data'])->name('master-buku.data');
+    Route::resource('buku', App\Http\Controllers\MasterBukuController::class)->names([
+        'index' => 'master-buku.index',
+        'create' => 'master-buku.create',
+        'edit' => 'master-buku.edit',
+        'store' => 'master-buku.store',
+        'update' => 'master-buku.update',
+        'destroy' => 'master-buku.delete',
+    ])->except('show');
 });

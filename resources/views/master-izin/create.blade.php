@@ -125,7 +125,7 @@
                     text: xhr.responseJSON.message,
                     icon: 'warning'
                   });
-									} 
+									}
                 },
                 error: function(xhr) {
                   Swal.fire({

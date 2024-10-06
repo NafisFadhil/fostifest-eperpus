@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tb_attendance', function (Blueprint $table) {
-            $table->string('photo_in')->after('date_out')->nullable();
-            $table->string('photo_out')->after('photo_in')->nullable();
+        Schema::table('ms_book', function (Blueprint $table) {
+            $table->integer('max_borrow_day')->change();
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tb_attendance', function (Blueprint $table) {
-            $table->dropColumn('photo_in');
-            $table->dropColumn('photo_out');
+        Schema::table('ms_book', function (Blueprint $table) {
+            $table->date('max_borrow_day')->change();
         });
     }
 };
