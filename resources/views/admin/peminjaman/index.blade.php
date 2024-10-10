@@ -16,12 +16,6 @@
                     <div class="card-body border-0 ps-10">
                         <div class="row g-8 align-items-end">
                             <div class="col-lg-2">
-                                <a href="{{ route('master-buku.create') }}" class="btn btn-success me-5 mt-2" >
-                                    <i class="fas fa-plus mr-2"></i>
-                                    Buat Buku Baru
-                                </a>
-                            </div>
-                            <div class="col-lg-2">
                                 <div class="form-label">Status Peminjaman</div>
                                 <select name="status" class="form-control select2" data-dropdown-css-class=""
                                         style="width: 100%;" id="status" data-placeholder="Status" placeholder="Status">
