@@ -69,4 +69,17 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'master-buku.update',
         'destroy' => 'master-buku.delete',
     ])->except('show');
+
+    //Peminjaman
+    Route::get('master-peminjaman/data', [App\Http\Controllers\PeminjamanController::class, 'data'])->name('peminjaman.data');
+    Route::get('master-peminjaman/poin/{id}', [App\Http\Controllers\PeminjamanController::class, 'poin'])->name('peminjaman.poin');
+    Route::put('master-peminjaman/poin/{id}/update', [App\Http\Controllers\PeminjamanController::class, 'poinUpdate'])->name('peminjaman.poin.update');
+    Route::resource('master-peminjaman', App\Http\Controllers\PeminjamanController::class)->names([
+        'index' => 'peminjaman.index',
+        'create' => 'peminjaman.create',
+        'edit' => 'peminjaman.edit',
+        'store' => 'peminjaman.store',
+        'update' => 'peminjaman.update',
+        'destroy' => 'peminjaman.delete',
+    ])->except('show');
 });
