@@ -16,19 +16,14 @@
                     <div class="card-body border-0 ps-10">
                         <div class="row g-8 align-items-end">
                             <div class="col-lg-2">
-                                <a href="{{ route('peminjaman.create') }}" class="btn btn-success me-5 mt-2" >
-                                    <i class="fas fa-plus mr-2"></i>
-                                    Buat Buku Baru
-                                </a>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-label">Kategori</div>
-                                <select name="kelas" class="form-control select2" data-dropdown-css-class=""
-                                        style="width: 100%;" id="kategori" data-placeholder="Kategori" placeholder="Kategori">
-                                    <option value="all" selected>Semua Kategori</option>
-                                    @foreach ($data_category as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
+                                <div class="form-label">Status Peminjaman</div>
+                                <select name="status" class="form-control select2" data-dropdown-css-class=""
+                                        style="width: 100%;" id="status" data-placeholder="Status" placeholder="Status">
+                                    <option value="all" selected>Semua Status</option>
+                                    <option value="0">Dipesan</option>
+                                    <option value="1">Dipinjam</option>
+                                    <option value="2">Dikembalikan</option>
+                                    <option value="3">Dibatalkan</option>
                                 </select>
                             </div>
                             {{-- Button filter --}}
@@ -44,12 +39,12 @@
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Judul Buku</th>
-                                <th>Sampul</th>
-                                <th>Deskripsi</th>
-                                <th>Max Hari Peminjaman</th>
-                                <th>Kategori</th>
-                                <th>Tanggal Publish</th>
+                                <th>Kode Peminjaman</th>
+                                <th>Peminjam</th>
+                                <th>Kode Buku</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Kembali</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -81,19 +76,16 @@
             responsive: true,
             "order": [],
             "ajax": {
-                url: '{{ route('master-buku.data') }}',
+                url: '{{ route('peminjaman.data') }}',
                 type: 'GET',
-                data: function (d) {
-                    d.category = $('#kategori').val(); // Pass the selected category to the server
-                }
             },
             "columns": [
-                { data: 'title' },
-                { data: 'image' },
-                { data: 'description' },
-                { data: 'max_borrow_day' },
-                { data: 'categories_name' },
-                { data: 'publish_date' },
+                { data: 'loan_code' },
+                { data: 'user_name' },
+                { data: 'book_code' },
+                { data: 'borrow_date' },
+                { data: 'return_date' },
+                { data: 'status_name' },
                 { data: 'action' }
             ]
         });
@@ -101,7 +93,7 @@
         // Filter data
         $("#filter-table").on('click', function () {
             // Reload the DataTable with the selected filter
-            table.ajax.reload();  // Re-fetch data from server with the new filter
+            table.ajax.url('{{ route('peminjaman.data') }}' + '?status=' + $('#status').val()).load();
         });
     });
     $(document).on('click', '.btn-hapus', function() {
