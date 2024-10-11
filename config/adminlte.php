@@ -295,11 +295,11 @@ return [
 
 	'menu' => [
 		// Navbar items:
-		// [
-		//     'type' => 'navbar-search',
-		//     'text' => 'search',
-		//     'topnav_right' => true,
-		// ],
+//		 [
+//		     'type' => 'navbar-search',
+//		     'text' => 'search',
+//		     'topnav_right' => true,
+//		 ],
 		[
 			'type' => 'fullscreen-widget',
 			'topnav_right' => true,
@@ -310,25 +310,10 @@ return [
 		    'type' => 'sidebar-menu-search',
 		    'text' => 'search',
 		],
-		// [
-		//     'text' => 'blog',
-		//     'url' => 'admin/blog',
-		//     'can' => 'manage-blog',
-		// ],
 		[
 			'text' => 'Dashboard',
 			'url' => 'home',
 			'icon' => 'fas fa-fw fa-home',
-		],
-		[
-			'header' => 'Absensi Siswa',
-			'can' => ['siswa'],
-		],
-		[
-			'text' => 'Absen',
-			'url' => 'absen',
-			'icon' => 'fas fa-fw fa-paste',
-			'can' => ['siswa'],
 		],
 		[
 			'text' => 'Izin',
@@ -340,48 +325,27 @@ return [
 			'header' => 'Peminjaman & Pengembalian',
 			'can' => ['superadmin', 'admin'],
 		],
-		// [
-		//     'text' => 'profile',
-		//     'url' => 'admin/settings',
-		//     'icon' => 'fas fa-fw fa-user',
-		// ],
-		// [
-		//     'text' => 'change_password',
-		//     'url' => 'admin/settings',
-		//     'icon' => 'fas fa-fw fa-lock',
-		// ],
         [
-            'text' => 'Transaksi',
+            'text' => 'Aktivitas',
             'icon' => 'fas fa-fw fa-file-alt',
             'can' => ['superadmin', 'admin'],
             'submenu' => [
                 [
                     'text' => 'Peminjaman',
                     'url' => 'master-peminjaman',
-                    // 'icon' => 'fas fa-fw fa-school',
                     'can' => ['superadmin', 'admin']
                 ],
                 [
                     'text' => 'Pengembalian',
                     'url' => 'master-pengembalian',
-                    // 'icon' => 'fas fa-fw fa-school',
                     'can' => ['superadmin', 'admin']
                 ],
             ],
         ],
-		[
-			'text' => 'Master Absensi',
-			'icon' => 'fas fa-fw fa-book',
-			'can' => ['superadmin', 'admin'],
-			'submenu' => [
-				[
-					'text' => 'Izin',
-					'url' => 'master-izin',
-					// 'icon' => 'fas fa-fw fa-school',
-					'can' => ['superadmin', 'admin']
-				],
-			],
-		],
+        [
+            'header' => 'Pengaturan',
+            'can' => ['superadmin', 'admin'],
+        ],
 		[
 			'text' => 'Master Data',
 			'icon' => 'fas fa-fw fa-database',
@@ -393,40 +357,6 @@ return [
 					// 'icon' => 'fas fa-fw fa-school',
 					'can' => 'superadmin'
 				],
-				// [
-				// 	'text' => 'User',
-				// 	'url' => 'user',
-				// 	// 'icon' => 'fas fa-fw fa-users',
-				// 	'can' => 'superadmin'
-				// ],
-				// [
-				// 	'text' => 'level_one',
-				// 	'url' => '#',
-				// ],
-				// [
-				// 	'text' => 'level_one',
-				// 	'url' => '#',
-				// 	'submenu' => [
-				// 		[
-				// 			'text' => 'level_two',
-				// 			'url' => '#',
-				// 		],
-				// 		[
-				// 			'text' => 'level_two',
-				// 			'url' => '#',
-				// 			'submenu' => [
-				// 				[
-				// 					'text' => 'level_three',
-				// 					'url' => '#',
-				// 				],
-				// 				[
-				// 					'text' => 'level_three',
-				// 					'url' => '#',
-				// 				],
-				// 			],
-				// 		],
-				// 	],
-				// ],
 			],
 		],
 		[
@@ -435,22 +365,6 @@ return [
 			'icon' => 'fas fa-fw fa-cog',
 			'can' => 'superadmin',
 		],
-		// ['header' => 'labels'],
-		// [
-		//     'text' => 'important',
-		//     'icon_color' => 'red',
-		//     'url' => '#',
-		// ],
-		// [
-		//     'text' => 'warning',
-		//     'icon_color' => 'yellow',
-		//     'url' => '#',
-		// ],
-		// [
-		//     'text' => 'information',
-		//     'icon_color' => 'cyan',
-		//     'url' => '#',
-		// ],
 	],
 
 	/*
