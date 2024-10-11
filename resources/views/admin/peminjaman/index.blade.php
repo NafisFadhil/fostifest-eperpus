@@ -78,9 +78,6 @@
             "ajax": {
                 url: '{{ route('peminjaman.data') }}',
                 type: 'GET',
-                data: function (d) {
-                    d.category = $('#kategori').val(); // Pass the selected category to the server
-                }
             },
             "columns": [
                 { data: 'loan_code' },
@@ -96,7 +93,7 @@
         // Filter data
         $("#filter-table").on('click', function () {
             // Reload the DataTable with the selected filter
-            table.ajax.reload();  // Re-fetch data from server with the new filter
+            table.ajax.url('{{ route('peminjaman.data') }}' + '?status=' + $('#status').val()).load();
         });
     });
     $(document).on('click', '.btn-hapus', function() {
