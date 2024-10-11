@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -17,17 +18,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/buku', function () {
-    return Inertia::render('Book', []);
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/detail/{id}', 'book');
 });
 
 // Route::get('/dashboard', function () {
