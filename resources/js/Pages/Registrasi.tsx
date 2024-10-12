@@ -1,27 +1,19 @@
 import { useForm } from "@inertiajs/react";
 import React, { FormEventHandler, useEffect } from "react";
 
-type Props = {
-    status?: string;
-};
-
-const Login = ({ status }: Props) => {
+const Registrasi = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
+        name: "",
+        hp: "",
+        alamat: "",
         username: "",
         password: "",
         remember: false,
     });
 
-    // useEffect(() => {
-    //     return () => {
-    //         reset("password");
-    //     };
-    // }, []);
-
-    const handleSubmit: FormEventHandler = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
-
-        post("/masuk");
+        post("/registrasiStore"); // Inertia will post to Laravel route
     };
 
     return (
@@ -44,6 +36,46 @@ const Login = ({ status }: Props) => {
                         onSubmit={handleSubmit}
                         className="w-full flex flex-col items-stretch gap-y-3 px-4"
                     >
+                        <div className="relative">
+                            <input
+                                type="text"
+                                name="name"
+                                id="InputName"
+                                placeholder="Nama Lengkap"
+                                onChange={(e) =>
+                                    setData("name", e.target.value)
+                                }
+                                className="w-full flex-1 bg-transparent text-sm border border-gray-200 rounded-md text-gray-700 focus:ring-0"
+                            />
+                            {errors.name && <div>{errors.name}</div>}
+                        </div>
+
+                        <div className="relative">
+                            <input
+                                type="text"
+                                name="name"
+                                id="InputHp"
+                                placeholder="No. Telepon"
+                                onChange={(e) => setData("hp", e.target.value)}
+                                className="w-full flex-1 bg-transparent text-sm border border-gray-200 rounded-md text-gray-700 focus:ring-0"
+                            />
+                            {errors.hp && <div>{errors.hp}</div>}
+                        </div>
+
+                        <div className="relative">
+                            <input
+                                type="text"
+                                name="alamat"
+                                id="InputAlamat"
+                                placeholder="Alamat"
+                                onChange={(e) =>
+                                    setData("alamat", e.target.value)
+                                }
+                                className="w-full flex-1 bg-transparent text-sm border border-gray-200 rounded-md text-gray-700 focus:ring-0"
+                            />
+                            {errors.alamat && <div>{errors.alamat}</div>}
+                        </div>
+
                         <div className="relative">
                             <input
                                 type="text"
@@ -77,18 +109,18 @@ const Login = ({ status }: Props) => {
                                 className="w-full cursor-pointer py-3 rounded-md shadow-md bg-primary text-white"
                                 disabled={processing}
                             >
-                                Masuk
+                                Daftar
                             </button>
                         </div>
 
                         <div className="relative">
                             <p className="text-xs text-center">
-                                Belum punya akun?{" "}
+                                Sudah punya akun?{" "}
                                 <a
-                                    href="/daftar"
+                                    href="/masuk"
                                     className="text-primary font-bold"
                                 >
-                                    Daftar sekarang.
+                                    Masuk.
                                 </a>
                             </p>
                         </div>
@@ -99,4 +131,4 @@ const Login = ({ status }: Props) => {
     );
 };
 
-export default Login;
+export default Registrasi;

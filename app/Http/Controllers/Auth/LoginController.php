@@ -63,8 +63,13 @@ class LoginController extends Controller
         return Inertia::render('Login', []);
     }
 
-    public function authenticate()
+    public function daftar()
     {
-        (new AuthenticatedSessionController())->store(request());
+        return Inertia::render('Registrasi', []);
+    }
+
+    public function registrasi(Request $request)
+    {
+        // return Inertia::render('Registrasi', []);
     }
 }

@@ -42,22 +42,22 @@ use Inertia\Inertia;
 Route::middleware('guest')->group(function () {
     Route::get('/masuk', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('masuk');
     Route::post('/masuk', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('masuk.post');
+    Route::get('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'daftar'])->name('daftar');
+    Route::post('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'registrasi'])->name('daftar.post');
+});
+
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/detail/{id}', 'book');
+    Route::get('/checkout/{id}', 'checkout');
+    Route::get('/mybook', 'mybook');
+    Route::get('profil', 'profil')->name('profil');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->name('home.data');
 Route::get('/home/data/admin', [App\Http\Controllers\HomeController::class, 'dataAdmin'])->name('home.data.admin');
 Route::middleware(['auth'])->group(function () {
-
-    Route::controller(LandingPageController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('/detail/{id}', 'book');
-        Route::get('/checkout/{id}', 'checkout');
-        Route::get('/mybook', 'mybook');
-        Route::get('profil', [\App\Http\Controllers\LandingPageController::class, 'profil'])
-            ->name('profil');
-    });
-
 
     // Master Data Season
     Route::get('season/data', [App\Http\Controllers\SeasonController::class, 'data'])->name('season.data');

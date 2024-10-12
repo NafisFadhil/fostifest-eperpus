@@ -1,11 +1,23 @@
 import GeneralLayout from "@/Layouts/GeneralLayout";
 import SubPageLayout from "@/Layouts/SubPageLayout";
+import { useForm } from "@inertiajs/react";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 
 type Props = {};
 
 const Book = (props: Props) => {
+    const { data, setData, post, processing, errors } = useForm({
+        name: "",
+        email: "",
+    });
+
+    const submit: FormEventHandler = (e: any) => {
+        e.preventDefault();
+
+        post(route("book"));
+    };
+
     return (
         <SubPageLayout>
             <div className="w-full">

@@ -28,8 +28,8 @@ export default function Home() {
 
                 <main className="w-full flex flex-col justify-stretch gap-y-8 px-4 py-8">
                     <section className="w-full max-w-screen-lg mx-auto flex flex-col gap-2">
-                        <div className="w-full flex items-center">
-                            Daftar Buku
+                        <div className="w-full flex items-center flex-col">
+                            <p className="text-lg font-bold"> Daftar Buku </p>
                             <div className="flex-1 leading-5">
                                 <h2 className="font-bold font-sans"></h2>
                                 <p className="text-sm">
