@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Inertia\Inertia;
 
 class LoginController extends Controller
 {
@@ -21,8 +20,13 @@ class LoginController extends Controller
     |
     */
 
-    protected function validateLogin(Request $request)
-    {
+    use AuthenticatesUsers;
+
+    protected function username() {
+        return 'username';
+    }
+
+    protected function validateLogin(Request $request) {
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
@@ -45,7 +49,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -54,22 +58,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest')->except('logout');
-        // $this->middleware('auth')->only('logout');
-    }
-
-    public function login()
-    {
-        return Inertia::render('Login', []);
-    }
-
-    public function daftar()
-    {
-        return Inertia::render('Registrasi', []);
-    }
-
-    public function registrasi(Request $request)
-    {
-        // return Inertia::render('Registrasi', []);
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
     }
 }
