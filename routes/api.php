@@ -23,3 +23,5 @@ Route::get('/books/{id}', 'App\Http\Controllers\Api\BookController@show');
 Route::post('/books/pinjam', 'App\Http\Controllers\Api\BookController@pinjam');
 
 Route::get('/me/{id}', 'App\Http\Controllers\Api\AccountController@me');
+
+Route::get('/leaderboard', 'App\Http\Controllers\Api\LeaderboardController@index');
