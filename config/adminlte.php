@@ -360,13 +360,7 @@ return [
                     'url' => 'master-peminjaman',
                     // 'icon' => 'fas fa-fw fa-school',
                     'can' => ['superadmin', 'admin']
-                ],
-                [
-                    'text' => 'Pengembalian',
-                    'url' => 'master-pengembalian',
-                    // 'icon' => 'fas fa-fw fa-school',
-                    'can' => ['superadmin', 'admin']
-                ],
+                ]
             ],
         ],
 		[
@@ -390,6 +384,12 @@ return [
 				[
 					'text' => 'Buku',
 					'url' => 'buku',
+					// 'icon' => 'fas fa-fw fa-school',
+					'can' => 'superadmin'
+				],
+				[
+					'text' => 'Level',
+					'url' => 'level',
 					// 'icon' => 'fas fa-fw fa-school',
 					'can' => 'superadmin'
 				],
