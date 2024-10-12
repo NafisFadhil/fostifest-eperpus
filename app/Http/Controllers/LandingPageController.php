@@ -17,10 +17,18 @@ class LandingPageController extends Controller
         return Inertia::render('Book', []);
     }
 
-    // public function search(Request $request)
-    // {
-    //     return Inertia::render('Search', [
-    //         'search' => $request->input('search')
-    //     ]);
-    // }
+    public function mybook()
+    {
+        return Inertia::render('MyBook', []);
+    }
+
+    public function checkout()
+    {
+        return Inertia::render('Checkout', []);
+    }
+
+    public function profil()
+    {
+        return Inertia::render('Profil', []);
+    }
 }

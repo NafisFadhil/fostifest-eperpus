@@ -31,6 +31,9 @@ const Book = (props: Props) => {
                         </div>
                         {/* Title */}
                         <div className="flex-1 flex flex-col gap-2 text-center leading-4">
+                            <span className="max-w-max mx-auto text-xs rounded-md px-1 bg-green-300 text-black">
+                                Status : Ready
+                            </span>
                             <p className="text-lg"> My Jaspier June </p>
                             <p className="text-sm opacity-75">
                                 By Jaspier June
@@ -65,7 +68,10 @@ const Book = (props: Props) => {
 
                 {/* Content */}
                 <main className="relative w-full max-w-screen-lg mx-auto px-4">
-                    <div id="content" className="w-full max-w-none prose">
+                    <div
+                        id="content"
+                        className="w-full max-w-none prose flex flex-col items-stretch gap-y-4"
+                    >
                         {/* Synopsis */}
                         <section className="w-full">
                             <h3 className="">Sinopsis</h3>
@@ -86,8 +92,57 @@ const Book = (props: Props) => {
                         </section>
 
                         <section className="w-full">
+                            <h3 className="">Rating dan ulasan</h3>
+                            <div className="w-full flex justify-stretch items-stretch overflow-x-scroll scrollbar-hide gap-x-4">
+                                {[...Array(12).keys()].map((i) => (
+                                    <div className="w-full max-w-[300px] flex-shrink-0 flex flex-col bg-white border rounded-lg shadow-md p-4">
+                                        {/* Testimonial Profile */}
+                                        <div className="w-full">
+                                            <p className="font-bold m-0">
+                                                Jaspier June {i + 1}
+                                            </p>
+                                            {/* Star */}
+                                            <div className="flex justify-start items-center gap-1">
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Testimonial Desc */}
+                                        <p className="text-sm">
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Esse,
+                                            dolorem quidem quis, porro
+                                            doloremque repudiandae nemo aliquam
+                                            architecto laboriosam culpa alias
+                                            mollitia neque corporis optio!
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="w-full py-4">
                             <a
-                                href=""
+                                href="/checkout/1"
                                 className="block w-full rounded-full shadow px-4 py-2 text-center bg-primary text-white not-prose hover:opacity-75 transition"
                             >
                                 Pinjam Sekarang

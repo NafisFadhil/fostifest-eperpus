@@ -5,12 +5,13 @@ import GeneralLayout from "./GeneralLayout";
 
 type Props = {
     children: React.ReactNode;
+    navbarTitle: string | undefined;
 };
 
-function SubPageLayout({ children }: PageProps<Props>) {
+function SubPageLayout({ children, navbarTitle }: PageProps<Props>) {
     return (
         <GeneralLayout>
-            <HeaderSubPage />
+            <HeaderSubPage title={navbarTitle} />
             {children}
         </GeneralLayout>
     );

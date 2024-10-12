@@ -24,7 +24,7 @@ const Footer = (props: Props) => {
                         <span className="text-xs font-bold"> Beranda </span>
                     </div>
                 </a>
-                <a
+                {/* <a
                     href="/cari"
                     className="flex-1 rounded text-black opacity-75 hover:opacity-100 transition"
                 >
@@ -32,9 +32,9 @@ const Footer = (props: Props) => {
                         <FaMagnifyingGlass size={20} className="" />
                         <span className="text-xs font-bold"> Pencarian </span>
                     </div>
-                </a>
+                </a> */}
                 <a
-                    href=""
+                    href="/mybook"
                     className="flex-1 rounded text-black opacity-75 hover:opacity-100 transition"
                 >
                     <div className="flex justify-center items-center flex-col">
@@ -43,7 +43,7 @@ const Footer = (props: Props) => {
                     </div>
                 </a>
                 <a
-                    href=""
+                    href="/profil"
                     className="flex-1 rounded text-black opacity-75 hover:opacity-100 transition"
                 >
                     <div className="flex justify-center items-center flex-col">

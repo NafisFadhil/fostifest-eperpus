@@ -17,8 +17,8 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::when(request('search'), function($query) {
-            $query->where('title', 'like', '%'.request('search').'%');
+        $books = Book::when(request('search'), function ($query) {
+            $query->where('title', 'like', '%' . request('search') . '%');
         })->with(['categories'])->orderBy('title', 'asc')->get();
         return response()->json([
             'data' => $books
@@ -34,7 +34,8 @@ class BookController extends Controller
         ]);
     }
 
-    public function pinjam(Request $request) {
+    public function pinjam(Request $request)
+    {
         if (Auth::check()) {
             $book_code_id = $request->book_code_id ?? Uuid::uuid7();
             // create data peminjaman didalam tb_loan
