@@ -87,4 +87,46 @@ class MasterLevelController extends Controller
         $data = Level::find($id);
         return view('admin.master_level.edit', compact('data'));
     }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'min_poin' => 'required|numeric',
+            'max_pinjam_buku' => 'required|numeric',
+            'reset_poin' => 'required|numeric',
+        ],
+        [
+            'name.required' => 'Nama wajib diisi',
+            'min_poin.required' => 'Minimal poin wajib diisi',
+            'min_poin.numeric' => 'Minimal poin harus berupa angka',
+            'max_pinjam_buku.required' => 'Maksimal peminjaman buku wajib diisi',
+            'max_pinjam_buku.numeric' => 'Maksimal peminjaman buku harus berupa angka',
+            'reset_poin.required' => 'Reset poin wajib diisi',
+            'reset_poin.numeric' => 'Reset poin harus berupa angka',
+        ]);
+        DB::beginTransaction();
+        try {
+            $data = Level::find($id);
+            $data->update([
+                'name' => $request->name,
+                'point_requirement' => $request->min_poin,
+                'max_borrow' => $request->max_pinjam_buku,
+                'reset_point' => $request->reset_poin,
+            ]);
+
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil diubah',
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

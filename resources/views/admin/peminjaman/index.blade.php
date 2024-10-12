@@ -97,59 +97,167 @@
         });
     });
     $(document).on('click', '.btn-hapus', function() {
-    var bookId = $(this).data('id');
-    var bookName = $(this).data('nama');
+        var bookId = $(this).data('id');
+        var bookName = $(this).data('nama');
 
-    // Show confirmation dialog using SweetAlert
-    Swal.fire({
-        title: 'Apakah anda yakin?',
-        text: 'Apakah anda yakin ingin menghapus buku "' + bookName + '"?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, hapus!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Proceed with the deletion via AJAX
-            var url = '{{ route('master-buku.delete', ':id') }}';
-            url = url.replace(':id', bookId);
-            $.ajax({
-                url: url,  // URL for the delete route
-                type: 'DELETE',
-                data: {
-                    "_token": "{{ csrf_token() }}"  // Pass the CSRF token for security
-                },
-                success: function(response) {
-                    if (response.status) {
-                        Swal.fire(
-                            'Berhasil!',
-                            response.message,
-                            'success'
-                        ).then(() => {
-                            // Optionally refresh the table or remove the deleted row
-                            location.reload(); // Refresh the page to see changes
-                        });
-                    } else {
+        // Show confirmation dialog using SweetAlert
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: 'Apakah anda yakin ingin menghapus buku "' + bookName + '"?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proceed with the deletion via AJAX
+                var url = '{{ route('master-buku.delete', ':id') }}';
+                url = url.replace(':id', bookId);
+                $.ajax({
+                    url: url,  // URL for the delete route
+                    type: 'DELETE',
+                    data: {
+                        "_token": "{{ csrf_token() }}"  // Pass the CSRF token for security
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire(
+                                'Berhasil!',
+                                response.message,
+                                'success'
+                            ).then(() => {
+                                // Optionally refresh the table or remove the deleted row
+                                location.reload(); // Refresh the page to see changes
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                response.message,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(xhr, status, error) {
                         Swal.fire(
                             'Error!',
-                            response.message,
+                            'Terjadi kesalahan saat menghapus buku. Silahkan hubungi administrator.',
                             'error'
                         );
                     }
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire(
-                        'Error!',
-                        'Terjadi kesalahan saat menghapus buku. Silahkan hubungi administrator.',
-                        'error'
-                    );
-                }
-            });
-        }
+                });
+            }
+        });
     });
-});
+    $(document).on('click', '.btn-borrow', function() {
+        var bookId = $(this).data('id');
+        var bookName = $(this).data('nama');
+
+        // Show confirmation dialog using SweetAlert
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: 'Apakah anda yakin buku "' + bookName + '"akan dipinjam?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Pinjamkan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proceed with the deletion via AJAX
+                var url = '{{ route('peminjaman.borrow', ':id') }}';
+                url = url.replace(':id', bookId);
+                $.ajax({
+                    url: url,  // URL for the delete route
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}"  // Pass the CSRF token for security
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire(
+                                'Berhasil!',
+                                response.message,
+                                'success'
+                            ).then(() => {
+                                // Optionally refresh the table or remove the deleted row
+                                location.reload(); // Refresh the page to see changes
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                response.message,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus buku. Silahkan hubungi administrator.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+    $(document).on('click', '.btn-return', function() {
+        var bookId = $(this).data('id');
+        var bookName = $(this).data('nama');
+
+        // Show confirmation dialog using SweetAlert
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: 'Apakah anda yakin buku "' + bookName + '"akan dikembalikan?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Kembalikan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proceed with the deletion via AJAX
+                var url = '{{ route('peminjaman.return', ':id') }}';
+                url = url.replace(':id', bookId);
+                $.ajax({
+                    url: url,  // URL for the delete route
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}"  // Pass the CSRF token for security
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire(
+                                'Berhasil!',
+                                response.message,
+                                'success'
+                            ).then(() => {
+                                // Optionally refresh the table or remove the deleted row
+                                location.reload(); // Refresh the page to see changes
+                            });
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                response.message,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus buku. Silahkan hubungi administrator.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
 
 </script>
 @endpush

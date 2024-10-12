@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class History extends Model
 {
@@ -13,6 +14,18 @@ class History extends Model
     protected $keyType = 'string';
     public $incrementing = false;
     protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Menggunakan event creating untuk mengisi ID dengan UUID
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid(); // Generate UUID
+            }
+        });
+    }
 
     public function user()
     {

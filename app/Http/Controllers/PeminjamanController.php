@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\History;
-use App\Models\Season;
 use Carbon\Carbon;
 use App\Models\Loan;
 use App\Models\User;
+use App\Models\Level;
+use App\Models\Season;
+use App\Models\History;
 use App\Models\BookCode;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -37,14 +38,20 @@ class PeminjamanController extends Controller
                 $item->book_code = $item->code_book->book->title . ' - ' . $item->code_book->code;
                 $button_state = 'disabled';
                 $button_review = '';
+                $button_borrow = '';
+                $button_return = '';
                 if ($item->status == 0) {
                     $status_name = '<span class="badge bg-secondary">Dipesan</span>';
+                    $button_borrow = '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->book_code . '" class="btn btn-icon btn-info btn-sm mx-1 btn-borrow" title="Buku Dipinjam"><i class="fas fa-arrow-up"></i></button>';
                 } elseif ($item->status == 1) {
                     $status_name = '<span class="badge bg-warning">Dipinjam</span>';
+                    $button_return = '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->book_code . '" class="btn btn-icon btn-success btn-sm mx-1 btn-return" title="Buku Dikembalikan"><i class="fas fa-arrow-down"></i></button>';
                 } elseif ($item->status == 2) {
                     $status_name = '<span class="badge bg-success">Dikembalikan</span>';
                     $button_state = '';
-                    $button_review = '<a href="' . route('peminjaman.poin', $item->id) . '" class="btn btn-icon btn-primary btn-sm mx-1 ' . $button_state . '"  title="Beri Poin"><i class="fas fa-coins"></i></a>';
+                    if ($item->review) {
+                        $button_review = '<a href="' . route('peminjaman.poin', $item->id) . '" class="btn btn-icon btn-primary btn-sm mx-1 ' . $button_state . '"  title="Beri Poin"><i class="fas fa-coins"></i></a>';
+                    }
                 } else {
                     $status_name = '<span class="badge bg-danger">Dibatalkan</span>';
                 }
@@ -57,7 +64,9 @@ class PeminjamanController extends Controller
                 $item->return_date = $item->return_date ?? 'Belum Dikembalikan';
 				$buttonHtml =
 					'<a href="' . route('peminjaman.edit', $item->id) . '" class="btn btn-icon btn-warning btn-sm mx-1" title="Edit Data"><i class="fas fa-edit"></i></a>'
-					. '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->title . '" class="btn btn-icon btn-danger btn-sm mx-1 btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></button>'
+					. '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->book_code . '" class="btn btn-icon btn-danger btn-sm mx-1 btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></button>'
+					. $button_borrow
+					. $button_return
                     . $button_review;
 
 				$item->action = $buttonHtml;
@@ -125,7 +134,7 @@ class PeminjamanController extends Controller
     {
         DB::beginTransaction();
         try {
-            $peminjaman = Loan::find($id)->first();
+            $peminjaman = Loan::find($id);
             if ($peminjaman) {
                 $peminjaman->update([
                     'status' => 1,
@@ -147,12 +156,13 @@ class PeminjamanController extends Controller
     {
         DB::beginTransaction();
         try {
-            $peminjaman = Loan::find($id)->first();
+            $peminjaman = Loan::where('id', $id)->with('code_book')->first();
             if ($peminjaman) {
                 $peminjaman->update([
                     'status' => 2,
                     'return_date' => Carbon::now(),
                 ]);
+                $peminjaman->code_book->update(['status' => 1]);
                 DB::commit();
                 return response()->json(['status' => true, 'message' => 'Data pengembalian berhasil ditambahkan', 'data' => $peminjaman], 200);
             } else {
@@ -167,7 +177,7 @@ class PeminjamanController extends Controller
 
     public function poin($id)
     {
-        $peminjaman = Loan::find($id)->with(['review', 'code_book' => function($query) {
+        $peminjaman = Loan::where('id', $id)->with(['review', 'code_book' => function($query) {
             $query->with('book');
         }])->first();
         if ($peminjaman) {
@@ -181,7 +191,7 @@ class PeminjamanController extends Controller
     {
         DB::beginTransaction();
         try {
-            $peminjaman = Loan::find($id)->with('review')->first();
+            $peminjaman = Loan::where('id', $id)->with('review')->first();
             if ($peminjaman) {
                 $peminjaman->review->update([
                     'points' => $request->data_range,
@@ -192,17 +202,24 @@ class PeminjamanController extends Controller
                     ->first();
 
                 if ($season) {
-                    History::updateOrCreate(
-                    // Kondisi untuk menentukan apakah record sudah ada
+                    // Cek level user berdasarkan point_requirement dan poin user dari history
+                    $history = History::updateOrCreate(
+                        // Kondisi untuk menentukan apakah record sudah ada
                         [
                             'user_id' => $peminjaman->user_id,
-                            'season_id' => $season->id
+                            'season_id' => $season->id,
                         ],
                         // Data yang akan diperbarui atau dibuat
                         [
                             'poin' => DB::raw('poin + ' . $request->data_range),
-                        ]
-                    );
+                            ]
+                        );
+                        $level = Level::where('point_requirement', '<=', History::where('user_id', $peminjaman->user_id)->value('poin'))
+                            ->orderBy('point_requirement', 'desc')
+                            ->first();
+                    $history->update([
+                        'level_id' => $level->id,
+                    ]);
                 }
 
                 DB::commit();
