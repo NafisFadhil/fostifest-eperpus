@@ -365,13 +365,7 @@ return [
 					'can' => 'superadmin'
 				],
 			],
-		],
-		[
-			'text' => 'Pengaturan',
-			'url' => 'setting',
-			'icon' => 'fas fa-fw fa-cog',
-			'can' => 'superadmin',
-		],
+		]
 	],
 
 	/*

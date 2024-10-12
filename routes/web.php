@@ -67,11 +67,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user/data', [App\Http\Controllers\UserController::class, 'data'])->name('user.data');
     Route::post('user/import', [App\Http\Controllers\UserController::class, 'import'])->name('user.import');
     Route::resource('user', App\Http\Controllers\UserController::class)->parameters(['user' => 'user']);
-
-    // Setting
-    Route::get('setting', [App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');
-    Route::post('setting', [App\Http\Controllers\SettingController::class, 'store'])->name('setting.store');
-
+    
     //Laporan Harian
     Route::get('laporan-harian', [App\Http\Controllers\LaporanHarianController::class, 'index'])->name('laporan_harian.index');
     Route::get('laporan-harian/data', [App\Http\Controllers\LaporanHarianController::class, 'data'])->name('laporan_harian.data');
