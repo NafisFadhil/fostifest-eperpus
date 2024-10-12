@@ -110,11 +110,11 @@
 
             // Filter data
             $("#filter-table").on('click', function () {
-                var kelas = $("#kelas").val();
+                var kelas = $("#season").val();
                 var date = $("#date").val();
 
                 // Update the DataTable with the selected filters
-                table.ajax.url('{{ route('laporan_harian.data') }}' + '?kelas=' + kelas +
+                table.ajax.url('{{ route('laporan_harian.data') }}' + '?season=' + kelas +
                     '&date=' +
                     date).load();
             });

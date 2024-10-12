@@ -14,7 +14,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <a href="{{ route('kelas.index') }}" class="btn btn-danger">Kembali</a>
+            <a href="{{ route('season.index') }}" class="btn btn-danger">Kembali</a>
             <h3 class="card-title"></h3>
           </div>
           <!-- /.card-header -->

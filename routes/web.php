@@ -56,9 +56,9 @@ Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->
 Route::get('/home/data/admin', [App\Http\Controllers\HomeController::class, 'dataAdmin'])->name('home.data.admin');
 Route::middleware(['auth'])->group(function () {
 
-    // Master Data Kelas
-    Route::get('kelas/data', [App\Http\Controllers\KelasController::class, 'data'])->name('kelas.data');
-    Route::resource('kelas', App\Http\Controllers\KelasController::class)->parameters(['kelas' => 'kelas']);
+    // Master Data Season
+    Route::get('season/data', [App\Http\Controllers\SeasonController::class, 'data'])->name('season.data');
+    Route::resource('season', App\Http\Controllers\SeasonController::class)->parameters(['season' => 'season']);
 
     // Master Absensi Izin
     Route::get('master-izin/data', [App\Http\Controllers\MasterIzinControler::class, 'data'])->name('master-izin.data');

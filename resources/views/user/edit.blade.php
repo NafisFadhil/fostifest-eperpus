@@ -90,7 +90,7 @@
 				theme: 'bootstrap4'
 			});
 			$('#role').val('{{ $user->role_id }}').trigger('change');
-			$('#kelas').val('{{ $user->kelas_id }}').trigger('change');
+			$('#season').val('{{ $user->kelas_id }}').trigger('change');
 			@if ($user->role->code != "MEMBER")
 				$('#selectKelasContainer').hide();
 			@endif
@@ -157,7 +157,7 @@
                     text: xhr.responseJSON.message,
                     icon: 'warning'
                   });
-									} 
+									}
                 },
                 error: function(xhr) {
                   Swal.fire({

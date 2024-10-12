@@ -357,6 +357,12 @@ return [
 					// 'icon' => 'fas fa-fw fa-school',
 					'can' => 'superadmin'
 				],
+                [
+					'text' => 'Season',
+					'url' => 'season',
+					// 'icon' => 'fas fa-fw fa-school',
+					'can' => 'superadmin'
+				],
 			],
 		],
 		[
