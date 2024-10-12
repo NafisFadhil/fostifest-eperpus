@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    pubblic function me($id) {
+    public function me($id) {
         $user = User::find($id);
         return response()->json([
             'data' => $user
