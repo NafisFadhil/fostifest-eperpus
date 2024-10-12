@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
+use App\Models\Season;
 use Carbon\Carbon;
 use App\Models\Loan;
 use App\Models\User;
@@ -185,6 +187,24 @@ class PeminjamanController extends Controller
                     'points' => $request->data_range,
                     'status' => 1,
                 ]);
+                $season = Season::where('start_date', '<=', Carbon::now())
+                    ->where('end_date', '>=', Carbon::now())
+                    ->first();
+
+                if ($season) {
+                    History::updateOrCreate(
+                    // Kondisi untuk menentukan apakah record sudah ada
+                        [
+                            'user_id' => $peminjaman->user_id,
+                            'season_id' => $season->id
+                        ],
+                        // Data yang akan diperbarui atau dibuat
+                        [
+                            'poin' => DB::raw('poin + ' . $request->data_range),
+                        ]
+                    );
+                }
+
                 DB::commit();
                 return response()->json(['status' => true, 'message' => 'Data peminjaman berhasil diupdate'], 200);
             } else {

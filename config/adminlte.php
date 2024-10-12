@@ -64,7 +64,7 @@ return [
     */
 
 	'logo' => '<b>E - Perpus</b>',
-	'logo_img' => '/vendor/adminlte/dist/img/AdminLTELogo.png',
+	'logo_img' => '/asset/images/logo.jpg',
 	'logo_img_class' => 'brand-image img-circle elevation-3',
 	'logo_img_xl' => null,
 	'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
 	'auth_logo' => [
 		'enabled' => false,
 		'img' => [
-			'path' => '/vendor/adminlte/dist/img/AdminLTELogo.png',
+			'path' => '/asset/images/logo.jpg',
 			'alt' => 'Auth Logo',
 			'class' => '',
 			'width' => 50,
@@ -113,8 +113,8 @@ return [
 		'enabled' => true,
 		'mode' => 'fullscreen',
 		'img' => [
-			'path' => '/vendor/adminlte/dist/img/AdminLTELogo.png',
-			'alt' => 'AdminLTE Preloader Image',
+			'path' => '/asset/images/logo.jpg',
+			'alt' => 'Logo',
 			'effect' => 'animation__shake',
 			'width' => 60,
 			'height' => 60,
@@ -295,11 +295,11 @@ return [
 
 	'menu' => [
 		// Navbar items:
-		// [
-		//     'type' => 'navbar-search',
-		//     'text' => 'search',
-		//     'topnav_right' => true,
-		// ],
+//		 [
+//		     'type' => 'navbar-search',
+//		     'text' => 'search',
+//		     'topnav_right' => true,
+//		 ],
 		[
 			'type' => 'fullscreen-widget',
 			'topnav_right' => true,
@@ -310,25 +310,10 @@ return [
 		    'type' => 'sidebar-menu-search',
 		    'text' => 'search',
 		],
-		// [
-		//     'text' => 'blog',
-		//     'url' => 'admin/blog',
-		//     'can' => 'manage-blog',
-		// ],
 		[
 			'text' => 'Dashboard',
 			'url' => 'home',
 			'icon' => 'fas fa-fw fa-home',
-		],
-		[
-			'header' => 'Absensi Siswa',
-			'can' => ['siswa'],
-		],
-		[
-			'text' => 'Absen',
-			'url' => 'absen',
-			'icon' => 'fas fa-fw fa-paste',
-			'can' => ['siswa'],
 		],
 		[
 			'text' => 'Izin',
@@ -340,42 +325,22 @@ return [
 			'header' => 'Peminjaman & Pengembalian',
 			'can' => ['superadmin', 'admin'],
 		],
-		// [
-		//     'text' => 'profile',
-		//     'url' => 'admin/settings',
-		//     'icon' => 'fas fa-fw fa-user',
-		// ],
-		// [
-		//     'text' => 'change_password',
-		//     'url' => 'admin/settings',
-		//     'icon' => 'fas fa-fw fa-lock',
-		// ],
         [
-            'text' => 'Transaksi',
+            'text' => 'Aktivitas',
             'icon' => 'fas fa-fw fa-file-alt',
             'can' => ['superadmin', 'admin'],
             'submenu' => [
                 [
                     'text' => 'Peminjaman',
                     'url' => 'master-peminjaman',
-                    // 'icon' => 'fas fa-fw fa-school',
                     'can' => ['superadmin', 'admin']
                 ]
             ],
         ],
-		[
-			'text' => 'Master Absensi',
-			'icon' => 'fas fa-fw fa-book',
-			'can' => ['superadmin', 'admin'],
-			'submenu' => [
-				[
-					'text' => 'Izin',
-					'url' => 'master-izin',
-					// 'icon' => 'fas fa-fw fa-school',
-					'can' => ['superadmin', 'admin']
-				],
-			],
-		],
+        [
+            'header' => 'Pengaturan',
+            'can' => ['superadmin', 'admin'],
+        ],
 		[
 			'text' => 'Master Data',
 			'icon' => 'fas fa-fw fa-database',
@@ -393,40 +358,12 @@ return [
 					// 'icon' => 'fas fa-fw fa-school',
 					'can' => 'superadmin'
 				],
-				// [
-				// 	'text' => 'User',
-				// 	'url' => 'user',
-				// 	// 'icon' => 'fas fa-fw fa-users',
-				// 	'can' => 'superadmin'
-				// ],
-				// [
-				// 	'text' => 'level_one',
-				// 	'url' => '#',
-				// ],
-				// [
-				// 	'text' => 'level_one',
-				// 	'url' => '#',
-				// 	'submenu' => [
-				// 		[
-				// 			'text' => 'level_two',
-				// 			'url' => '#',
-				// 		],
-				// 		[
-				// 			'text' => 'level_two',
-				// 			'url' => '#',
-				// 			'submenu' => [
-				// 				[
-				// 					'text' => 'level_three',
-				// 					'url' => '#',
-				// 				],
-				// 				[
-				// 					'text' => 'level_three',
-				// 					'url' => '#',
-				// 				],
-				// 			],
-				// 		],
-				// 	],
-				// ],
+                [
+					'text' => 'Season',
+					'url' => 'season',
+					// 'icon' => 'fas fa-fw fa-school',
+					'can' => 'superadmin'
+				],
 			],
 		],
 		[
@@ -435,22 +372,6 @@ return [
 			'icon' => 'fas fa-fw fa-cog',
 			'can' => 'superadmin',
 		],
-		// ['header' => 'labels'],
-		// [
-		//     'text' => 'important',
-		//     'icon_color' => 'red',
-		//     'url' => '#',
-		// ],
-		// [
-		//     'text' => 'warning',
-		//     'icon_color' => 'yellow',
-		//     'url' => '#',
-		// ],
-		// [
-		//     'text' => 'information',
-		//     'icon_color' => 'cyan',
-		//     'url' => '#',
-		// ],
 	],
 
 	/*

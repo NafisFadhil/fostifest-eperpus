@@ -2,9 +2,9 @@
 
 {{-- Customize layout sections --}}
 
-@section('subtitle', 'Kelas')
+@section('subtitle', 'Season')
 @section('content_header_title', 'Master Data')
-@section('content_header_subtitle', 'Kelas')
+@section('content_header_subtitle', 'Season')
 
 {{-- Content body: main page content --}}
 
@@ -14,7 +14,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <a href="{{ route('kelas.create') }}" class="btn btn-primary">Tambah Data</a>
+            <a href="{{ route('season.create') }}" class="btn btn-primary">Tambah Data</a>
             <h3 class="card-title"></h3>
           </div>
           <!-- /.card-header -->
@@ -23,6 +23,8 @@
               <thead>
                 <tr>
                   <th>Nama</th>
+                  <th>Tanggal Mulai</th>
+                  <th>Tanggal Selesai</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -54,12 +56,18 @@
         responsive: true,
         "order": [],
         "ajax": {
-          url: '{{ route('kelas.data') }}',
+          url: '{{ route('season.data') }}',
           type: 'GET',
         },
         "columns": [{
             data: 'name'
           },
+          {
+            data: 'start_date'
+          },
+            {
+                data: 'end_date'
+            },
           {
             data: 'action',
           },
@@ -96,7 +104,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             // Generate the URL using the route() function
-            var url = "{{ route('kelas.destroy', ['kelas' => ':kode']) }}";
+            var url = "{{ route('season.destroy', ['season' => ':kode']) }}";
             url = url.replace(':kode',
               kode); // Replace :kode with the actual kode value
 

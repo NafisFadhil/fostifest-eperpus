@@ -2,9 +2,9 @@
 
 {{-- Customize layout sections --}}
 
-@section('subtitle', 'Kehadiran')
-@section('content_header_title', 'Absensi')
-@section('content_header_subtitle', 'Kehadiran')
+@section('subtitle', 'Edit Season')
+@section('content_header_title', 'Master Data')
+@section('content_header_subtitle', 'Edit Season')
 
 {{-- Content body: main page content --}}
 
@@ -13,24 +13,29 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <div class="card-header">
+                        <a href="{{ route('season.index') }}" class="btn btn-danger">Kembali</a>
+                        <h3 class="card-title"></h3>
+                    </div>
                     <!-- /.card-header -->
                     <form id="quickForm">
+                        @csrf
+                        @method('PUT')
                         <div class="card-body">
-                            <input type="hidden" name="lat">
-                            <input type="hidden" name="long">
                             <div class="form-group">
-                                <label for="tanggal">Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control" id="tanggal"
-                                       placeholder="Pilih Tanggal Izin" value="{{ date('Y-m-d') }}" readonly>
+                                <label for="name">Nama</label>
+                                <input type="text" name="name" class="form-control" id="name"
+                                       placeholder="Masukkan Nama" value="{{ $data->name }}">
                             </div>
                             <div class="form-group">
-                                <label for="photo_attendance">Foto Absen</label>
-                                <input type="file" name="photo_attendance" class="form-control" id="photo_attendance" accept="image/*" capture>
+                                <label for="start_date">Tanggal Mulai</label>
+                                <input type="date" name="start_date" class="form-control" id="start_date"
+                                       placeholder="Masukkan Tanggal Mulai" value="{{ $data->start_date }}">
                             </div>
                             <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea name="keterangan" class="form-control" id="keterangan"
-                                          placeholder="Masukkan Keterangan, bisa disi '-'" rows="5"></textarea>
+                                <label for="end_date">Tanggal Selesai</label>
+                                <input type="date" name="end_date" class="form-control" id="end_date"
+                                       placeholder="Masukkan Tanggal Selesai" value="{{ $data->end_date }}">
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -60,9 +65,6 @@
 @push('js')
     <script>
         $(function () {
-            $('.select2').select2({
-                theme: 'bootstrap4'
-            });
             $.validator.setDefaults({
                 submitHandler: function () {
                     var form = $('#quickForm');
@@ -77,17 +79,23 @@
                         if (result.isConfirmed) {
                             // Create a new FormData object to include form data
                             var formData = new FormData(form[0]);
+                            console.log(formData);
 
+
+                            var csrfToken = $('meta[name="csrf-token"]').attr('content');
                             // Add the CSRF token to the form data
-                            formData.append('_token', $('input[name="_token"]').val());
+                            formData.append('_token', csrfToken);
 
                             // Perform AJAX form submission
                             $.ajax({
-                                url: '{{ route('absen.store') }}',
+                                url: '{{ route('season.update', $data) }}',
                                 method: 'POST',
                                 data: formData,
                                 processData: false,
                                 contentType: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+                                },
                                 beforeSend: function () {
                                     Swal.fire({
                                         title: 'Silahkan tunggu',
@@ -104,7 +112,7 @@
                                             icon: "success",
                                         }).then(() => {
                                             window.location.href =
-                                                `{{ route('home') }}`;
+                                                `{{ route('season.index') }}`;
                                         });
                                     } else {
                                         Swal.fire({
@@ -131,30 +139,26 @@
             });
             $('#quickForm').validate({
                 rules: {
-                    tanggal: {
+                    name: {
                         required: true,
                     },
-                    keterangan: {
-                        required: true,
+                    start_date: {
+                        required: true
                     },
-                    photo_attendance: {
-                        required: true,
-                        extension: "jpg|jpeg|png",
-                        filesize: 2097152
+                    end_date: {
+                        required: true
                     }
                 },
                 messages: {
-                    tanggal: {
-                        required: "Tanggal harus diisi",
+                    name: {
+                        required: "Nama harus diisi",
                     },
-                    photo_attendance: {
-                        required: "Foto absen harus diisi",
-                        extension: "Foto absen harus berupa file gambar (jpg, jpeg, png)",
-                        filesize: "Ukuran file foto absen maksimal 2MB"
+                    start_date: {
+                        required: "Tanggal mulai harus diisi"
                     },
-                    keterangan: {
-                        required: "Keterangan harus diisi",
-                    },
+                    end_date: {
+                        required: "Tanggal selesai harud diisi"
+                    }
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
@@ -169,58 +173,5 @@
                 }
             });
         });
-
-        var gpsPermission = false;
-        navigator.permissions.query({
-            name: 'geolocation'
-        })
-            .then(permission => {
-                permission.onchange = function () {
-                    if (permission.state == 'denied') {
-                        Swal.fire({
-                            title: 'Gagal!',
-                            text: 'Silahkan berikan akses GPS',
-                            icon: 'warning'
-                        }).then(function() {
-                            location.reload()
-                        });
-                        gpsPermission = false;
-                    } else {
-                        gpsPermission = true;
-                    }
-                }
-                if (permission.state == 'denied') {
-                    Swal.fire({
-                        title: 'Gagal!',
-                        text: 'Silahkan berikan akses GPS',
-                        icon: 'warning'
-                    }).then(function() {
-                        location.reload()
-                    });
-                    gpsPermission = false;
-                } else {
-                    gpsPermission = true;
-                }
-                if (gpsPermission == false) {
-                    Swal.fire({
-                        title: 'Gagal!',
-                        text: 'Silahkan berikan akses GPS',
-                        icon: 'warning'
-                    }).then(function() {
-                        location.reload()
-                    });
-                    return;
-                }
-            });
-
-        navigator.geolocation.getCurrentPosition(function (location) {
-            $('input[name="lat"]').val(location.coords.latitude);
-            $('input[name="long"]').val(location.coords.longitude);
-        }, function (e) {
-            // console.log(e);
-        }, {
-            timeout: 10000,
-            enableHighAccuracy: true
-        })
     </script>
 @endpush
