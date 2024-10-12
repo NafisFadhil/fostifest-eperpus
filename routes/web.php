@@ -49,7 +49,7 @@ Route::get('/buku', function () {
 //     return redirect('/login');
 // });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->name('home.data');
@@ -60,10 +60,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('season/data', [App\Http\Controllers\SeasonController::class, 'data'])->name('season.data');
     Route::resource('season', App\Http\Controllers\SeasonController::class)->parameters(['season' => 'season']);
 
-    // Master Absensi Izin
-    Route::get('master-izin/data', [App\Http\Controllers\MasterIzinControler::class, 'data'])->name('master-izin.data');
-    Route::resource('master-izin', App\Http\Controllers\MasterIzinControler::class)->parameters(['master-izin' => 'master-izin']);
-
     // Master User
     Route::get('user/data', [App\Http\Controllers\UserController::class, 'data'])->name('user.data');
     Route::post('user/import', [App\Http\Controllers\UserController::class, 'import'])->name('user.import');
@@ -73,22 +69,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('setting', [App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');
     Route::post('setting', [App\Http\Controllers\SettingController::class, 'store'])->name('setting.store');
 
-    // Izin
-    Route::get('izin', [App\Http\Controllers\IzinController::class, 'index'])->name('izin.index');
-    Route::post('izin', [App\Http\Controllers\IzinController::class, 'store'])->name('izin.store');
-
-    //Absen
-    Route::get('absen', [App\Http\Controllers\AttendanceController::class, 'index'])->name('absen.index');
-    Route::post('absen', [App\Http\Controllers\AttendanceController::class, 'store'])->name('absen.store');
-
     //Laporan Harian
     Route::get('laporan-harian', [App\Http\Controllers\LaporanHarianController::class, 'index'])->name('laporan_harian.index');
     Route::get('laporan-harian/data', [App\Http\Controllers\LaporanHarianController::class, 'data'])->name('laporan_harian.data');
-
-    //Laporan Bulanan
-    Route::get('laporan-bulanan', [App\Http\Controllers\LaporanBulananController::class, 'index'])->name('laporan_bulanan.index');
-    Route::get('laporan-bulanan/data', [App\Http\Controllers\LaporanBulananController::class, 'data'])->name('laporan_bulanan.data');
-
 
     //Buku
     Route::get('buku/data', [App\Http\Controllers\MasterBukuController::class, 'data'])->name('master-buku.data');
