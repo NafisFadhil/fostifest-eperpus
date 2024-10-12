@@ -196,6 +196,7 @@ class PeminjamanController extends Controller
                 $peminjaman->review->update([
                     'points' => $request->data_range,
                     'status' => 1,
+                    'accepted_by' => Auth::user()->id,
                 ]);
                 $season = Season::where('start_date', '<=', Carbon::now())
                     ->where('end_date', '>=', Carbon::now())
