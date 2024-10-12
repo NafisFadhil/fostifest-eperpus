@@ -1,75 +1,169 @@
 import GeneralLayout from "@/Layouts/GeneralLayout";
+import SubPageLayout from "@/Layouts/SubPageLayout";
+import { useForm } from "@inertiajs/react";
 import React from "react";
+import { FaStar } from "react-icons/fa6";
 
 type Props = {};
 
 const Book = (props: Props) => {
+    const { data, setData, post, processing, errors } = useForm({
+        name: "",
+        email: "",
+    });
+
+    const submit: FormEventHandler = (e: any) => {
+        e.preventDefault();
+
+        post(route("book"));
+    };
+
     return (
-        <GeneralLayout>
+        <SubPageLayout>
             <div className="w-full">
-                <div
-                    id="background"
-                    className="w-full h-[50dvh] overflow-hidden relative flex justify-center items-center"
-                >
-                    {/* Background Fade */}
-                    <div
-                        className="absolute -z-10"
-                        style={{
-                            boxShadow: "0 0 1000px 0 white inset",
-                        }}
-                    >
+                {/* Header */}
+                <div id="background" className="size-full relative text-white">
+                    <div className="absolute -z-[1] size-full bg-primary">
                         <img
                             src="/asset/images/cover-buku.jpeg"
                             alt=""
-                            className="block object-cover object-center w-full h-full brightness-75 saturate-50 opacity-15"
+                            className="block size-full object-cover object-center opacity-50 blur-lg shadow-inner"
                         />
                     </div>
 
                     {/* Book Cover */}
-                    {/* Image */}
-                    <div className="flex flex-col items-center gap-2">
-                        <img
-                            src="/asset/images/cover-buku.jpeg"
-                            alt=""
-                            className="block object-cover object-center w-[150px] h-auto aspect-auto"
-                        />
+                    <div className="size-full flex flex-col justify-center items-center mx-auto lg:max-w-screen-md pt-16 pb-10 px-5 gap-4">
+                        {/* Image */}
+                        <div className="flex-1 max-w-[220px]">
+                            <img
+                                src="/asset/images/cover-buku.jpeg"
+                                alt=""
+                                className="block w-[180px] h-auto aspect-auto rounded-md shadow-lg shadow-black/50 ml-auto"
+                            />
+                        </div>
                         {/* Title */}
-                        <div className="text-center leading-3">
+                        <div className="flex-1 flex flex-col gap-2 text-center leading-4">
+                            <span className="max-w-max mx-auto text-xs rounded-md px-1 bg-green-300 text-black">
+                                Status : Ready
+                            </span>
                             <p className="text-lg"> My Jaspier June </p>
                             <p className="text-sm opacity-75">
-                                {" "}
-                                November 2025{" "}
+                                By Jaspier June
                             </p>
+                            <div className="flex justify-center items-center gap-1">
+                                <FaStar size={14} className="text-yellow-400" />
+                                <FaStar size={14} className="text-yellow-400" />
+                                <FaStar size={14} className="text-yellow-400" />
+                                <FaStar size={14} className="text-yellow-400" />
+                                <FaStar size={14} className="text-yellow-400" />
+                                <span className="pl-2 text-xs opacity-75">
+                                    (5.0)
+                                </span>
+                            </div>
+                            <div className="flex flex-row flex-wrap justify-center items-center gap-2 text-xs">
+                                <span className="bg-white/10 rounded-full px-4 py-1">
+                                    Action
+                                </span>
+                                <span className="bg-white/10 rounded-full px-4 py-1">
+                                    Adventure
+                                </span>
+                                <span className="bg-white/10 rounded-full px-4 py-1">
+                                    Romance
+                                </span>
+                            </div>
+                            {/* <a className="flex-1 max-w-max rounded-full bg-secondary px-4 py-3 mt-2 text-nowrap cursor-pointer hover:opacity-75 transition">
+                                Pinjam Sekarang
+                            </a> */}
                         </div>
                     </div>
                 </div>
 
-                <main
-                    className="relative w-full bg-white px-4 py-4"
-                    style={{
-                        boxShadow: "0 -10px 15px rgb(0 0 0 / 10%)",
-                    }}
-                >
-                    <div id="content" className="">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Minus maxime perspiciatis amet molestiae, vel dolorem
-                        quas voluptate minima magni neque tenetur blanditiis a
-                        soluta deleniti optio atque beatae ducimus quod, iste
-                        dolor. Sunt, dolorem odit! Doloribus, quidem. Eos iusto
-                        dolorum voluptas, nulla ducimus dignissimos incidunt!
-                        Labore, provident laboriosam deserunt, odit voluptas
-                        autem minus sit quia, saepe temporibus molestias ipsam!
-                        Laborum aperiam velit consectetur temporibus corporis
-                        laudantium odio deserunt omnis minima blanditiis
-                        similique earum, hic tempora quia. Autem eveniet
-                        possimus repudiandae sequi temporibus fugit corrupti!
-                        Repellendus, architecto in reprehenderit nisi ad aut
-                        nulla dolor cumque, magni fuga nihil dicta,
-                        exercitationem ratione.
+                {/* Content */}
+                <main className="relative w-full max-w-screen-lg mx-auto px-4">
+                    <div
+                        id="content"
+                        className="w-full max-w-none prose flex flex-col items-stretch gap-y-4"
+                    >
+                        {/* Synopsis */}
+                        <section className="w-full">
+                            <h3 className="">Sinopsis</h3>
+                            <p className="">
+                                Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Nostrum iure, non error illo
+                                corporis facilis id recusandae veritatis minus
+                                sit, aspernatur, asperiores odio quas aperiam
+                                laborum porro quos velit sequi omnis. Nostrum
+                                vitae commodi fuga, aspernatur distinctio vero
+                                reprehenderit ipsam dolorem voluptas sequi ex
+                                enim minus deserunt, animi tenetur quasi est
+                                voluptate qui ut saepe? Sequi ut nemo totam,
+                                sapiente commodi, impedit cupiditate dolores
+                                natus consectetur minima consequuntur fuga illum
+                                officiis. Esse quisquam ipsa dolores?
+                            </p>
+                        </section>
+
+                        <section className="w-full">
+                            <h3 className="">Rating dan ulasan</h3>
+                            <div className="w-full flex justify-stretch items-stretch overflow-x-scroll scrollbar-hide gap-x-4">
+                                {[...Array(12).keys()].map((i) => (
+                                    <div className="w-full max-w-[300px] flex-shrink-0 flex flex-col bg-white border rounded-lg shadow-md p-4">
+                                        {/* Testimonial Profile */}
+                                        <div className="w-full">
+                                            <p className="font-bold m-0">
+                                                Jaspier June {i + 1}
+                                            </p>
+                                            {/* Star */}
+                                            <div className="flex justify-start items-center gap-1">
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                                <FaStar
+                                                    size={14}
+                                                    className="text-yellow-400"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Testimonial Desc */}
+                                        <p className="text-sm">
+                                            Lorem ipsum dolor sit amet
+                                            consectetur adipisicing elit. Esse,
+                                            dolorem quidem quis, porro
+                                            doloremque repudiandae nemo aliquam
+                                            architecto laboriosam culpa alias
+                                            mollitia neque corporis optio!
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="w-full py-4">
+                            <a
+                                href="/checkout/1"
+                                className="block w-full rounded-full shadow px-4 py-2 text-center bg-primary text-white not-prose hover:opacity-75 transition"
+                            >
+                                Pinjam Sekarang
+                            </a>
+                        </section>
                     </div>
                 </main>
             </div>
-        </GeneralLayout>
+        </SubPageLayout>
     );
 };
 

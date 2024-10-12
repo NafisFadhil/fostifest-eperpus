@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -16,19 +17,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/buku', function () {
-    return Inertia::render('Book', []);
-});
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -49,7 +37,22 @@ Route::get('/buku', function () {
 //     return redirect('/login');
 // });
 
-Auth::routes(['register' => false]);
+// Auth::routes();
+
+Route::middleware('guest')->group(function () {
+    Route::get('/masuk', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('masuk');
+    Route::post('/masuk', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('masuk.post');
+    Route::get('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'daftar'])->name('daftar');
+    Route::post('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'registrasi'])->name('daftar.post');
+});
+
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/detail/{id}', 'book');
+    Route::get('/checkout/{id}', 'checkout');
+    Route::get('/mybook', 'mybook');
+    Route::get('profil', 'profil')->name('profil');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->name('home.data');
@@ -86,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Level
     Route::get('level/data', [App\Http\Controllers\MasterLevelController::class, 'data'])->name('master-level.data');
-    Route::resource( 'level', App\Http\Controllers\MasterLevelController::class)->names([
+    Route::resource('level', App\Http\Controllers\MasterLevelController::class)->names([
         'index' => 'master-level.index',
         'create' => 'master-level.create',
         'edit' => 'master-level.edit',
@@ -110,6 +113,9 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'peminjaman.update',
         'destroy' => 'peminjaman.delete',
     ])->except('show', 'return', 'borrow', 'poin', 'poinUpdate');
+
+    Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
 });
 Route::get('/token', function () {
     return csrf_token();
