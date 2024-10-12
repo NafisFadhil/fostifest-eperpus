@@ -40,10 +40,10 @@ use Inertia\Inertia;
  Auth::routes(['register' => false]);
 
 Route::middleware('guest')->group(function () {
-    Route::get('/masuk', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('masuk');
+    Route::get('/masuk', [\App\Http\Controllers\MasukController::class, 'login'])->name('masuk');
     Route::post('/masuk', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('masuk.post');
-    Route::get('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'daftar'])->name('daftar');
-    Route::post('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'registrasi'])->name('daftar.post');
+    Route::get('/daftar', [\App\Http\Controllers\MasukController::class, 'daftar'])->name('daftar');
+    Route::post('/daftar', [\App\Http\Controllers\MasukController::class, 'registrasi'])->name('daftar.post');
 });
 
 Route::controller(LandingPageController::class)->group(function () {
