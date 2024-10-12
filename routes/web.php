@@ -85,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
     ])->except('show');
 
     //Level
-    Route::get('level/data', [App\Http\Controllers\MasterLevelController::class, 'data'])->name('master-buku.data');
+    Route::get('level/data', [App\Http\Controllers\MasterLevelController::class, 'data'])->name('master-level.data');
     Route::resource( 'level', App\Http\Controllers\MasterLevelController::class)->names([
         'index' => 'master-level.index',
         'create' => 'master-level.create',
@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'master-level.update',
         'destroy' => 'master-level.delete',
     ])->except('show');
+
     //Peminjaman
     Route::get('master-peminjaman/data', [App\Http\Controllers\PeminjamanController::class, 'data'])->name('peminjaman.data');
     Route::get('master-peminjaman/poin/{id}', [App\Http\Controllers\PeminjamanController::class, 'poin'])->name('peminjaman.poin');

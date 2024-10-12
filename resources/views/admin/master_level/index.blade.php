@@ -2,9 +2,9 @@
 
 {{-- Customize layout sections --}}
 
-@section('subtitle', 'Buku')
+@section('subtitle', 'Level')
 @section('content_header_title', 'Master Data')
-@section('content_header_subtitle', 'Buku')
+@section('content_header_subtitle', 'Level')
 
 {{-- Content body: main page content --}}
 
@@ -15,18 +15,11 @@
                 <div class="card">
                     <div class="card-body border-0 ps-10">
                         <div class="row g-8 align-items-end">
-                            <div class="col-lg-2">
-                                <a href="{{ route('peminjaman.create') }}" class="btn btn-success me-5 mt-2" >
+                            <div class="">
+                                <a href="{{ route('master-level.create') }}" class="btn btn-success me-5 mt-2" >
                                     <i class="fas fa-plus mr-2"></i>
-                                    Buat Buku Baru
+                                    Buat Level Baru
                                 </a>
-                            </div>
-                            {{-- Button filter --}}
-                            <div class="col-lg-2">
-                                <button type="button" class="btn btn-primary me-5 mt-2" id="filter-table">
-                                    <i class="fas fa-search"></i>
-                                    Cari
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -34,12 +27,10 @@
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Judul Buku</th>
-                                <th>Sampul</th>
-                                <th>Deskripsi</th>
-                                <th>Max Hari Peminjaman</th>
-                                <th>Kategori</th>
-                                <th>Tanggal Publish</th>
+                                <th>Nama Level</th>
+                                <th>Minimal Poin</th>
+                                <th>Maksimal Pinjam</th>
+                                <th>Reset Poin</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -71,19 +62,17 @@
             responsive: true,
             "order": [],
             "ajax": {
-                url: '{{ route('master-buku.data') }}',
+                url: '{{ route('master-level.data') }}',
                 type: 'GET',
                 data: function (d) {
                     d.category = $('#kategori').val(); // Pass the selected category to the server
                 }
             },
             "columns": [
-                { data: 'title' },
-                { data: 'image' },
-                { data: 'description' },
-                { data: 'max_borrow_day' },
-                { data: 'categories_name' },
-                { data: 'publish_date' },
+                { data: 'name' },
+                { data: 'point_requirement' },
+                { data: 'max_borrow' },
+                { data: 'reset_point' },
                 { data: 'action' }
             ]
         });
