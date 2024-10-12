@@ -50,6 +50,7 @@ class SeasonController extends Controller
 				'name' => $request->name,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
+                'status' => false,
 				'created_at' => now(),
 			];
 			$model->insert($data);

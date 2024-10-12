@@ -37,7 +37,7 @@ use Inertia\Inertia;
 //     return redirect('/login');
 // });
 
-// Auth::routes();
+ Auth::routes(['register' => false]);
 
 Route::middleware('guest')->group(function () {
     Route::get('/masuk', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('masuk');
