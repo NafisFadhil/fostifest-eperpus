@@ -248,11 +248,13 @@ class MasterBukuController extends Controller
             $path_name = null;
             if ($request->hasFile('sampul')) {
                 $old_image = Book::find($request->id);
-                $image_path = public_path($old_image->cover);
+                if ($old_image) {
+                    $image_path = public_path($old_image->cover);
 
-                // Remove old image if it exists
-                if (file_exists($image_path)) {
-                    unlink($image_path);
+                    // Remove old image if it exists
+                    if (file_exists($image_path)) {
+                        unlink($image_path);
+                    }
                 }
 
                 // Save the new cover image
