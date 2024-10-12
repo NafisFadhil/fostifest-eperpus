@@ -12,9 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-		protected $primaryKey = 'id';
-		protected $keyType = 'string';
-		public $incrementing = false;
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -41,20 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
-		
-		public function role() {
-			return $this->belongsTo(Role::class);
-		}
 
-		public function kelas() {
-			return $this->belongsTo(Kelas::class);
-		}
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
-		public function izin() {
-			return $this->hasMany(Izin::class);
-		}
-
-		public function attendance() {
-			return $this->hasMany(Attendance::class);
-		}
+    public function loan()
+    {
+        return $this->hasMany(Loan::class, 'user_id', 'id');
+    }
 }
