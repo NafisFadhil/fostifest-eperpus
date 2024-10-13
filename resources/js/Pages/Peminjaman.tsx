@@ -103,6 +103,9 @@ const Peminjaman = ({ loan }: Props) => {
                             <h3 className="">Deskipsi</h3>
                             <ul className="leading-4">
                                 <li className="">
+                                    ID Buku : <b>{loan.loan_code}</b>
+                                </li>
+                                <li className="">
                                     Poin Minimal : <b>{book.min_points}</b>
                                 </li>
                                 <li className="">
@@ -208,13 +211,13 @@ const Peminjaman = ({ loan }: Props) => {
                                             htmlFor="InputReview"
                                             className=""
                                         >
-                                            Summary
+                                            Ringkasan
                                         </label>
 
                                         <textarea
                                             name="summary"
                                             id="InputSummary"
-                                            placeholder="Tuliskan summary anda untuk buku yang dipinjam..."
+                                            placeholder="Tuliskan ringkasan anda untuk buku yang dipinjam..."
                                             rows={5}
                                             onChange={(e) =>
                                                 setData(

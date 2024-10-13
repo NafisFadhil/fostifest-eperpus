@@ -24,8 +24,6 @@ const MyBook = ({ auth, loans }: Props) => {
                     {/* Book Cards */}
                     <div className="w-full flex flex-col justify-stretch items-stretch overflow-auto gap-y-4">
                         {loans.map((data: object, i: number) => {
-                            console.log(data);
-
                             return (
                                 <a
                                     href={"/peminjaman/" + data.id}

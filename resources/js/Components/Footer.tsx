@@ -1,6 +1,7 @@
 import React from "react";
 import {
     FaBookmark,
+    FaCrown,
     FaHouse,
     FaMagnifyingGlass,
     FaUser,
@@ -33,6 +34,15 @@ const Footer = (props: Props) => {
                         <span className="text-xs font-bold"> Pencarian </span>
                     </div>
                 </a> */}
+                <a
+                    href="/leaderboard"
+                    className="flex-1 rounded text-black opacity-75 hover:opacity-100 transition"
+                >
+                    <div className="flex justify-center items-center flex-col">
+                        <FaCrown size={20} className="" />
+                        <span className="text-xs font-bold"> Leaderboard </span>
+                    </div>
+                </a>
                 <a
                     href="/mybook"
                     className="flex-1 rounded text-black opacity-75 hover:opacity-100 transition"
