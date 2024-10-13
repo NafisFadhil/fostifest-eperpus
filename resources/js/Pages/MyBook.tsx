@@ -27,7 +27,7 @@ const MyBook = ({ auth, loans }: Props) => {
                             return (
                                 <a
                                     href={"/peminjaman/" + data.id}
-                                    className="w-full relative prose"
+                                    className="flex-1 w-full relative prose max-w-none"
                                 >
                                     <div className="flex items-center flex-nowrap bg-gray-200 gap-x-4 p-2 rounded-md hover:brightness-105 shadow-md transition-all">
                                         <div className="w-full max-w-[120px] h-auto relative rounded-md">

@@ -103,7 +103,7 @@ const Peminjaman = ({ loan }: Props) => {
                             <h3 className="">Deskipsi</h3>
                             <ul className="leading-4">
                                 <li className="">
-                                    ID Buku : <b>{loan.loan_code}</b>
+                                    Kode Peminjaman : <b>{loan.loan_code}</b>
                                 </li>
                                 <li className="">
                                     Poin Minimal : <b>{book.min_points}</b>
@@ -129,11 +129,8 @@ const Peminjaman = ({ loan }: Props) => {
                         {/* Rating */}
                         <section className="w-full">
                             <h3 className="">Pengembalian</h3>
-                            {(loan.review && (
-                                <p className="text-sm">
-                                    Review : {loan.review}
-                                </p>
-                            )) || (
+
+                            {loan.status == 1 && (
                                 <form
                                     onSubmit={handleSubmit}
                                     className="w-full flex flex-col items-stretch gap-y-3 px-4"
@@ -238,6 +235,12 @@ const Peminjaman = ({ loan }: Props) => {
                                         </button>
                                     </div>
                                 </form>
+                            )}
+
+                            {loan.status == 0 && (
+                                <p className="">
+                                    Silahkan ambil buku di perpustakaan.
+                                </p>
                             )}
                         </section>
                     </div>
