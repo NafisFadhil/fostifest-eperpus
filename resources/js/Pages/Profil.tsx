@@ -6,9 +6,10 @@ import { FaAngleLeft, FaStar } from "react-icons/fa6";
 
 type Props = {
     auth?: object;
+    season?: object;
 };
 
-const Profil = ({ auth }: Props) => {
+const Profil = ({ auth, season }: Props) => {
     useEffect(() => {
         console.log(auth);
 
@@ -54,11 +55,22 @@ const Profil = ({ auth }: Props) => {
                                     {auth.user.name}
                                 </p>
                                 <p className="text-lg">
-                                    Peringkat: <span className="">-</span>
+                                    Peringkat:{" "}
+                                    <span className="">
+                                        {auth.user?.level?.name}
+                                    </span>
                                 </p>
                                 <p className="text-lg text-yellow-500">
                                     - Poin
                                 </p>
+                                <div className="">
+                                    <a
+                                        href="/logout"
+                                        className="text-red-500 font-bold"
+                                    >
+                                        Logout
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

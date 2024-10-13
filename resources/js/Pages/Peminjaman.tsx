@@ -18,7 +18,6 @@ const Peminjaman = ({ loan }: Props) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(data);
 
         post("/peminjaman/" + loan.id); // Inertia will post to Laravel route
     };

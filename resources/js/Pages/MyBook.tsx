@@ -1,14 +1,19 @@
 import Footer from "@/Components/Footer";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa6";
 
 type Props = {
     auth?: any;
     loans?: any;
+    message?: any;
 };
 
-const MyBook = ({ auth, loans }: Props) => {
+const MyBook = ({ auth, loans, message }: Props) => {
     console.log(loans);
+
+    useEffect(() => {
+        message && window.alert(message);
+    }, [message]);
 
     return (
         <div id="wrapper" className="w-full relative">
@@ -24,7 +29,7 @@ const MyBook = ({ auth, loans }: Props) => {
                     {/* Book Cards */}
                     <div className="w-full flex flex-col justify-stretch items-stretch overflow-auto gap-y-4">
                         {loans.map((data: object, i: number) => {
-                            return (
+                            return data.status > 1 ? null : (
                                 <a
                                     href={"/peminjaman/" + data.id}
                                     className="flex-1 w-full relative prose max-w-none"
@@ -52,7 +57,10 @@ const MyBook = ({ auth, loans }: Props) => {
                                                         .publish_date
                                                 }
                                             </p>
-                                            <p className="">{/* {data.} */}</p>
+                                            <p className="">
+                                                {data.status > 1 &&
+                                                    "Buku telah dikembalikan."}
+                                            </p>
                                         </div>
                                     </div>
                                 </a>

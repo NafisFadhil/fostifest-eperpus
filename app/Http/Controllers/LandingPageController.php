@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\BookCode;
 use App\Models\History;
+use App\Models\Level;
 use App\Models\Loan;
 use App\Models\Review;
+use App\Models\Season;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -60,51 +63,52 @@ class LandingPageController extends Controller
 
     public function checkout(Request $request, string $id)
     {
-        if (Auth::check()) {
+        try {
+            if (!Auth::check()) {
+                return redirect()->back()->with('message', $e->getMessage());
+            }
             $book_code_id = $id ?? Uuid::uuid7();
             // create data peminjaman didalam tb_loan
             DB::beginTransaction();
-            try {
-                if (isset($book_code_id)) {
-                    //check if code_book is available
-                    $code_book = BookCode::find($id);
-                    if ($code_book) {
-                        if ($code_book->status == 1) {
-                            //Generate loan code
-                            //Format loan code : book_code - user_id - date (string)
-                            $loan_code = $code_book->code . '-' . strtoupper(str_replace(' ', '', User::first()->name)) . '-' . date('dmyHis');
-                            // $loan_code = $code_book->code . '-' . strtoupper(str_replace(' ', '', auth()->user()->name)) . '-' . date('dmyHis');
-                            //Create data loan
-                            $loan = [
-                                'id' => Str::uuid(),
-                                'user_id' => User::first()->id,
-                                'book_code_id' => $id,
-                                'loan_code' => $loan_code,
-                                'status' => 0,
-                            ];
-                            // store data loan
-                            Loan::create($loan);
+            if (isset($book_code_id)) {
+                //check if code_book is available
+                $code_book = BookCode::find($id);
+                if ($code_book) {
+                    if ($code_book->status == 1) {
+                        //Generate loan code
+                        //Format loan code : book_code - user_id - date (string)
+                        $loan_code = $code_book->code . '-' . strtoupper(str_replace(' ', '', User::first()->name)) . '-' . date('dmyHis');
+                        // $loan_code = $code_book->code . '-' . strtoupper(str_replace(' ', '', auth()->user()->name)) . '-' . date('dmyHis');
+                        //Create data loan
+                        $loan = [
+                            'id' => Str::uuid(),
+                            'user_id' => User::first()->id,
+                            'book_code_id' => $id,
+                            'loan_code' => $loan_code,
+                            'status' => 0,
+                        ];
+                        // store data loan
+                        Loan::create($loan);
 
-                            // update status code book
-                            $code_book->update(['status' => 0]);
-                            DB::commit();
-                        } else {
-                            return redirect()->back()->with(['status' => false, 'message' => 'Kode buku sedang dipinjam. Silahkan pilih buku yang lain'], 409);
-                        }
-                    } else {
-                        return redirect()->back()->with(['status' => false, 'message' => 'Kode buku tidak ditemukan'], 404);
+                        // update status code book
+                        $code_book->update(['status' => 0]);
+                        DB::commit();
                     }
-
-                    return redirect('/mybook')->with(['status' => true, 'message' => 'Data peminjaman berhasil ditambahkan', 'data' => $loan], 200);
-                } else {
-                    return redirect()->back()->with(['status' => false, 'message' => 'Data buku tidak ditemukan'], 404);
                 }
-            } catch (\Exception $e) {
-                DB::rollBack();
-                return redirect()->back()->with(['status' => false, 'message' => $e->getMessage()], 500);
+
+                if (isset($loan) && $loan) {
+                    return redirect()->back()->with(
+                        [
+                            'status' => true,
+                            'message' => 'Data peminjaman berhasil ditambahkan',
+                            'data' => $loan
+                        ]
+                    );
+                }
             }
-        } else {
-            return redirect()->back()->with(['status' => false, 'message' => 'Login terlebih dahulu'], 401);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('message', $e->getMessage());
         }
     }
 
