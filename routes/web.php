@@ -18,25 +18,6 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// require __DIR__ . '/auth.php';
-
-
-
-
-// Route::get('/', function () {
-//     return redirect('/login');
-// });
-
 Auth::routes(['register' => false]);
 
 Route::middleware('guest')->group(function () {
@@ -47,8 +28,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->name('home.data');
-Route::get('/home/data/admin', [App\Http\Controllers\HomeController::class, 'dataAdmin'])->name('home.data.admin');
 Route::middleware(['auth'])->group(function () {
     // Landing Page
     Route::controller(LandingPageController::class)->group(function () {
@@ -65,15 +44,6 @@ Route::middleware(['auth'])->group(function () {
     // Master Data Season
     Route::get('season/data', [App\Http\Controllers\SeasonController::class, 'data'])->name('season.data');
     Route::resource('season', App\Http\Controllers\SeasonController::class)->parameters(['season' => 'season']);
-
-    // Master User
-    Route::get('user/data', [App\Http\Controllers\UserController::class, 'data'])->name('user.data');
-    Route::post('user/import', [App\Http\Controllers\UserController::class, 'import'])->name('user.import');
-    Route::resource('user', App\Http\Controllers\UserController::class)->parameters(['user' => 'user']);
-
-    //Laporan Harian
-    // Route::get('laporan-harian', [App\Http\Controllers\LaporanHarianController::class, 'index'])->name('laporan_harian.index');
-    // Route::get('laporan-harian/data', [App\Http\Controllers\LaporanHarianController::class, 'data'])->name('laporan_harian.data');
 
     //Buku
     Route::get('buku/data', [App\Http\Controllers\MasterBukuController::class, 'data'])->name('master-buku.data');
@@ -114,7 +84,4 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
         ->name('logoutGet');
-});
-Route::get('/token', function () {
-    return csrf_token();
 });
