@@ -50,9 +50,14 @@ const Profil = ({ auth }: Props) => {
                             </div>
                             {/* Detail */}
                             <div className="flex flex-col">
-                                <p className="text-lg">{auth.user.name}</p>
+                                <p className="text-xl font-bold">
+                                    {auth.user.name}
+                                </p>
+                                <p className="text-lg">
+                                    Peringkat: <span className="">-</span>
+                                </p>
                                 <p className="text-lg text-yellow-500">
-                                    {50} Poin
+                                    - Poin
                                 </p>
                             </div>
                         </div>

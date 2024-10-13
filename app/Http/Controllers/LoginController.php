@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -32,5 +36,23 @@ class LoginController extends Controller
         return Inertia::render('Registrasi', []);
     }
 
-    public function registrasi(Request $request) {}
+    public function registrasi(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+        $role = Role::where('code', 'MEMBER')->first();
+
+        $user = User::create([
+            ...$validated,
+            'id' => Uuid::uuid7(),
+            'role_id' => $role->id,
+        ]);
+
+        return redirect('/masuk')->with(['status' => true, 'message' => 'Data peminjaman berhasil ditambahkan', 'data' => $user], 200);
+    }
 }

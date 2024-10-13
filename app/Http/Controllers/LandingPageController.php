@@ -42,7 +42,7 @@ class LandingPageController extends Controller
 
     public function leaderboard()
     {
-        $leaderboard = History::with(['user', 'level', 'season'])->orderBy('poin', 'desc')->get();
+        $leaderboard = History::with(['user', 'level', 'season'])->orderBy('poin', 'desc')->limit(3)->get();
 
         return Inertia::render('Leaderboard', [
             'leaderboard' => $leaderboard
@@ -78,7 +78,6 @@ class LandingPageController extends Controller
                             $loan = [
                                 'id' => Str::uuid(),
                                 'user_id' => User::first()->id,
-                                'borrow_date' => now(),
                                 'book_code_id' => $id,
                                 'loan_code' => $loan_code,
                                 'status' => 0,
@@ -96,7 +95,7 @@ class LandingPageController extends Controller
                         return redirect()->back()->with(['status' => false, 'message' => 'Kode buku tidak ditemukan'], 404);
                     }
 
-                    return redirect()->back()->with(['status' => true, 'message' => 'Data peminjaman berhasil ditambahkan', 'data' => $loan], 200);
+                    return redirect('/mybook')->with(['status' => true, 'message' => 'Data peminjaman berhasil ditambahkan', 'data' => $loan], 200);
                 } else {
                     return redirect()->back()->with(['status' => false, 'message' => 'Data buku tidak ditemukan'], 404);
                 }

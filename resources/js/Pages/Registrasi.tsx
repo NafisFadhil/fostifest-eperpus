@@ -4,20 +4,20 @@ import React, { FormEventHandler, useEffect } from "react";
 const Registrasi = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
-        hp: "",
-        alamat: "",
+        phone: "",
+        address: "",
         username: "",
         password: "",
-        remember: false,
     });
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        post("/registrasiStore"); // Inertia will post to Laravel route
+
+        post("/daftar"); // Inertia will post to Laravel route
     };
 
     return (
-        <div className="w-full h-[100dvh] relative flex justify-center items-center bg-primary">
+        <div className="w-full h-[100dvh] relative flex justify-center items-center bg-primary p-4">
             {/* Card */}
             <div className="w-full max-w-[400px] px-4 py-8 bg-white rounded-lg shadow">
                 {/* Card Layout */}
@@ -29,7 +29,7 @@ const Registrasi = () => {
 
                     {/* Desc */}
                     <p className="-mt-3 text-gray-500 text-sm">
-                        Silahkan login untuk melanjutkan.
+                        Silahkan daftar untuk melanjutkan.
                     </p>
 
                     <form
@@ -52,28 +52,30 @@ const Registrasi = () => {
 
                         <div className="relative">
                             <input
-                                type="text"
-                                name="name"
-                                id="InputHp"
+                                type="number"
+                                name="phone"
+                                id="InputPhone"
                                 placeholder="No. Telepon"
-                                onChange={(e) => setData("hp", e.target.value)}
+                                onChange={(e) =>
+                                    setData("phone", e.target.value)
+                                }
                                 className="w-full flex-1 bg-transparent text-sm border border-gray-200 rounded-md text-gray-700 focus:ring-0"
                             />
-                            {errors.hp && <div>{errors.hp}</div>}
+                            {errors.phone && <div>{errors.phone}</div>}
                         </div>
 
                         <div className="relative">
                             <input
                                 type="text"
-                                name="alamat"
-                                id="InputAlamat"
+                                name="address"
+                                id="InputAddress"
                                 placeholder="Alamat"
                                 onChange={(e) =>
-                                    setData("alamat", e.target.value)
+                                    setData("address", e.target.value)
                                 }
                                 className="w-full flex-1 bg-transparent text-sm border border-gray-200 rounded-md text-gray-700 focus:ring-0"
                             />
-                            {errors.alamat && <div>{errors.alamat}</div>}
+                            {errors.address && <div>{errors.address}</div>}
                         </div>
 
                         <div className="relative">
@@ -107,7 +109,6 @@ const Registrasi = () => {
                             <button
                                 type="submit"
                                 className="w-full cursor-pointer py-3 rounded-md shadow-md bg-primary text-white"
-                                disabled={processing}
                             >
                                 Daftar
                             </button>

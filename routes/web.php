@@ -42,8 +42,8 @@ Auth::routes(['register' => false]);
 Route::middleware('guest')->group(function () {
     Route::get('/masuk', [\App\Http\Controllers\MasukController::class, 'login'])->name('masuk');
     Route::post('/masuk', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('masuk.post');
-    Route::get('/daftar', [\App\Http\Controllers\MasukController::class, 'daftar'])->name('daftar');
-    Route::post('/daftar', [\App\Http\Controllers\MasukController::class, 'registrasi'])->name('daftar.post');
+    Route::get('/daftar', [\App\Http\Controllers\LoginController::class, 'daftar'])->name('daftar');
+    Route::post('/daftar', [\App\Http\Controllers\LoginController::class, 'registrasi'])->name('daftar.post');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -111,6 +111,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
+        ->name('logoutGet');
 });
 Route::get('/token', function () {
     return csrf_token();
