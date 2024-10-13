@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Loan::class, 'user_id', 'id');
     }
+
+    public function history()
+    {
+        return $this->hasMany(History::class, 'user_id', 'id');
+    }
 }

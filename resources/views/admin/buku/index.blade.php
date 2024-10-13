@@ -16,7 +16,7 @@
                     <div class="card-body border-0 ps-10">
                         <div class="row g-8 align-items-end">
                             <div class="col-lg-2">
-                                <a href="{{ route('peminjaman.create') }}" class="btn btn-success me-5 mt-2" >
+                                <a href="{{ route('master-buku.create') }}" class="btn btn-success me-5 mt-2" >
                                     <i class="fas fa-plus mr-2"></i>
                                     Buat Buku Baru
                                 </a>
