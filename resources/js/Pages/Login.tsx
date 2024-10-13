@@ -25,7 +25,7 @@ const Login = ({ status }: Props) => {
     };
 
     return (
-        <div className="w-full h-[100dvh] relative flex justify-center items-center bg-primary">
+        <div className="w-full h-[100dvh] relative flex justify-center items-center bg-primary p-4">
             {/* Card */}
             <div className="w-full max-w-[400px] px-4 py-8 bg-white rounded-lg shadow">
                 {/* Card Layout */}

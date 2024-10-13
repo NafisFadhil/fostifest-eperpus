@@ -16,6 +16,8 @@ class User extends Authenticatable
     protected $keyType = 'string';
     public $incrementing = false;
 
+    public $with = ['role', 'loan'];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -32,13 +32,13 @@ class LoginController extends Controller
         ]);
     }
 
-    // protected function sendFailedLoginResponse(Request $request)
-    // {
-    // 	throw ValidationException::withMessages([
-    // 		$this->username() => "Invalid username or password",
-    // 		'g-recaptcha-response.required' => 'Please complete the captcha'
-    // 	]);
-    // }
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => "Invalid username or password",
+            'g-recaptcha-response.required' => 'Please complete the captcha'
+        ]);
+    }
 
     /**
      * Where to redirect users after login.
@@ -56,20 +56,5 @@ class LoginController extends Controller
     {
         // $this->middleware('guest')->except('logout');
         // $this->middleware('auth')->only('logout');
-    }
-
-    public function login()
-    {
-        return Inertia::render('Login', []);
-    }
-
-    public function daftar()
-    {
-        return Inertia::render('Registrasi', []);
-    }
-
-    public function registrasi(Request $request)
-    {
-        // return Inertia::render('Registrasi', []);
     }
 }

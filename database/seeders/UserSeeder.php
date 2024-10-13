@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-						'id' => Uuid::uuid7(),
-						'role_id' => Role::where('code', 'SUPADMIN')->first()->id,
-						'name' => 'Superadmin',
-						'username' => 'superadmin',
-						'password' => Hash::make('admin'),
-				]);
+            'id' => Uuid::uuid7(),
+            'role_id' => Role::where('code', 'SUPADMIN')->first()->id,
+            'name' => 'Superadmin',
+            'username' => 'superadmin',
+            'password' => Hash::make('admin'),
+        ]);
     }
 }

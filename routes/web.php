@@ -37,27 +37,29 @@ use Inertia\Inertia;
 //     return redirect('/login');
 // });
 
- Auth::routes(['register' => false]);
+Auth::routes(['register' => false]);
 
 Route::middleware('guest')->group(function () {
-    Route::get('/masuk', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('masuk');
-    Route::post('/masuk', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('masuk.post');
-    Route::get('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'daftar'])->name('daftar');
-    Route::post('/daftar', [\App\Http\Controllers\Auth\LoginController::class, 'registrasi'])->name('daftar.post');
-});
-
-Route::controller(LandingPageController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/detail/{id}', 'book');
-    Route::get('/checkout/{id}', 'checkout');
-    Route::get('/mybook', 'mybook');
-    Route::get('profil', 'profil')->name('profil');
+    Route::get('/masuk', [\App\Http\Controllers\LoginController::class, 'login'])->name('masuk');
+    Route::post('/masuk', [\App\Http\Controllers\LoginController::class, 'authenticate'])->name('masuk.post');
+    Route::get('/daftar', [\App\Http\Controllers\LoginController::class, 'daftar'])->name('daftar');
+    Route::post('/daftar', [\App\Http\Controllers\LoginController::class, 'registrasi'])->name('daftar.post');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->name('home.data');
 Route::get('/home/data/admin', [App\Http\Controllers\HomeController::class, 'dataAdmin'])->name('home.data.admin');
 Route::middleware(['auth'])->group(function () {
+    // Landing Page
+    Route::controller(LandingPageController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/detail/{id}', 'book');
+        Route::get('/checkout/{id}', 'checkout');
+        Route::get('/mybook', 'mybook');
+        Route::get('/peminjaman/{id}', 'peminjaman');
+        Route::post('/peminjaman/{id}', 'kembalikan');
+        Route::get('profil', 'profil')->name('profil');
+    });
 
     // Master Data Season
     Route::get('season/data', [App\Http\Controllers\SeasonController::class, 'data'])->name('season.data');
@@ -73,8 +75,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('setting', [App\Http\Controllers\SettingController::class, 'store'])->name('setting.store');
 
     //Laporan Harian
-    Route::get('laporan-harian', [App\Http\Controllers\LaporanHarianController::class, 'index'])->name('laporan_harian.index');
-    Route::get('laporan-harian/data', [App\Http\Controllers\LaporanHarianController::class, 'data'])->name('laporan_harian.data');
+    // Route::get('laporan-harian', [App\Http\Controllers\LaporanHarianController::class, 'index'])->name('laporan_harian.index');
+    // Route::get('laporan-harian/data', [App\Http\Controllers\LaporanHarianController::class, 'data'])->name('laporan_harian.data');
 
     //Buku
     Route::get('buku/data', [App\Http\Controllers\MasterBukuController::class, 'data'])->name('master-buku.data');
