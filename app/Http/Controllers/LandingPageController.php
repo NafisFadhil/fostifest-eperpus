@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BookCode;
+use App\Models\History;
 use App\Models\Loan;
 use App\Models\Review;
 use App\Models\User;
@@ -36,6 +37,15 @@ class LandingPageController extends Controller
 
         return Inertia::render('Book', [
             'book' => $book
+        ]);
+    }
+
+    public function leaderboard()
+    {
+        $leaderboard = History::with(['user', 'level', 'season'])->orderBy('poin', 'desc')->get();
+
+        return Inertia::render('Leaderboard', [
+            'leaderboard' => $leaderboard
         ]);
     }
 

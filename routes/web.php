@@ -46,14 +46,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/daftar', [\App\Http\Controllers\MasukController::class, 'registrasi'])->name('daftar.post');
 });
 
-Route::controller(LandingPageController::class)->group(function () {
-    Route::get('/', 'index');
-    Route::get('/detail/{id}', 'book');
-    Route::get('/checkout/{id}', 'checkout');
-    Route::get('/mybook', 'mybook');
-    Route::get('profil', 'profil')->name('profil');
-});
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/data', [App\Http\Controllers\HomeController::class, 'data'])->name('home.data');
 Route::get('/home/data/admin', [App\Http\Controllers\HomeController::class, 'dataAdmin'])->name('home.data.admin');
@@ -66,7 +58,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/mybook', 'mybook');
         Route::get('/peminjaman/{id}', 'peminjaman');
         Route::post('/peminjaman/{id}', 'kembalikan');
-        Route::get('profil', 'profil')->name('profil');
+        Route::get('/leaderboard', 'leaderboard')->name('leaderboard');
+        Route::get('/profil', 'profil')->name('profil');
     });
 
     // Master Data Season
