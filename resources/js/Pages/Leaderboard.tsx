@@ -50,7 +50,7 @@ const Leaderboard = ({ leaderboard }: Props) => {
                                     </div>
                                     <div className="flex items-center justify-center gap-4 flex-nowrap">
                                         <h1 className="text-3xl font-bold rounded-full border border-white text-white size-20 flex justify-center items-center">
-                                            1
+                                            2
                                         </h1>
                                         <div className="text-left flex-1">
                                             <h1 className="text-white text-xl font-bold">
@@ -69,7 +69,7 @@ const Leaderboard = ({ leaderboard }: Props) => {
                                     </div>
                                     <div className="flex items-center justify-center gap-4 flex-nowrap">
                                         <h1 className="text-3xl font-bold rounded-full border border-white text-white size-20 flex justify-center items-center">
-                                            1
+                                            3
                                         </h1>
                                         <div className="text-left flex-1">
                                             <h1 className="text-white text-xl font-bold">
