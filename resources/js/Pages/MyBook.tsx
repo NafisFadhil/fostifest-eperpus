@@ -14,7 +14,7 @@ const MyBook = ({ auth, loans }: Props) => {
         <div id="wrapper" className="w-full relative">
             {/* Header */}
             <header className="w-full px-4 py-16 text-center prose prose-invert prose-lg max-w-none bg-primary">
-                <h2 className="">Buku Saya</h2>
+                <h2 className="">Riwayat</h2>
             </header>
 
             {/* Second Header */}
