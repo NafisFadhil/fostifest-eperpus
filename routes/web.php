@@ -40,10 +40,18 @@ use Inertia\Inertia;
 Auth::routes(['register' => false]);
 
 Route::middleware('guest')->group(function () {
-    Route::get('/masuk', [\App\Http\Controllers\LoginController::class, 'login'])->name('masuk');
-    Route::post('/masuk', [\App\Http\Controllers\LoginController::class, 'authenticate'])->name('masuk.post');
-    Route::get('/daftar', [\App\Http\Controllers\LoginController::class, 'daftar'])->name('daftar');
-    Route::post('/daftar', [\App\Http\Controllers\LoginController::class, 'registrasi'])->name('daftar.post');
+    Route::get('/masuk', [\App\Http\Controllers\MasukController::class, 'login'])->name('masuk');
+    Route::post('/masuk', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('masuk.post');
+    Route::get('/daftar', [\App\Http\Controllers\MasukController::class, 'daftar'])->name('daftar');
+    Route::post('/daftar', [\App\Http\Controllers\MasukController::class, 'registrasi'])->name('daftar.post');
+});
+
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/detail/{id}', 'book');
+    Route::get('/checkout/{id}', 'checkout');
+    Route::get('/mybook', 'mybook');
+    Route::get('profil', 'profil')->name('profil');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -69,10 +77,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user/data', [App\Http\Controllers\UserController::class, 'data'])->name('user.data');
     Route::post('user/import', [App\Http\Controllers\UserController::class, 'import'])->name('user.import');
     Route::resource('user', App\Http\Controllers\UserController::class)->parameters(['user' => 'user']);
-
-    // Setting
-    Route::get('setting', [App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');
-    Route::post('setting', [App\Http\Controllers\SettingController::class, 'store'])->name('setting.store');
 
     //Laporan Harian
     // Route::get('laporan-harian', [App\Http\Controllers\LaporanHarianController::class, 'index'])->name('laporan_harian.index');

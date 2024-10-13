@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Models\History;
+use Carbon\Carbon;
 use App\Models\Level;
-use App\Models\Season;
-use Illuminate\Console\Command;
 use Ramsey\Uuid\Uuid;
+use App\Models\Season;
+use App\Models\History;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class ResetSeason extends Command
 {
@@ -29,27 +31,34 @@ class ResetSeason extends Command
      */
     public function handle()
     {
-        $activeSeason = Season::where('start_date', now())->first();
-        if ($activeSeason) {
-            $season = Season::where('status', true)->first();
-            if ($season) {
-                $season->update(['status' => false]);
-            }
-            $history = History::where('season_id', $season->id)->get();
-            foreach ($history as $item) {
-                $level = Level::where('id', $item->level_id)->first();
-                $item->update(['point' => $item->point - $level?->reset_poin]);
-                History::create([
-                    'id' => Uuid::uuid7(),
-                    'user_id' => $item->user_id,
-                    'level_id' => $item->level_id,
-                    'season_id' => $activeSeason->id,
-                    'point' => $item->point,
-                    'created_at' => now(),
-                ]);
+        DB::beginTransaction();
+        try {
+            $activeSeason = Season::whereDate('start_date', Carbon::now())->first();
+            if ($activeSeason) {
+                $season = Season::where('status', true)->first();
+                if ($season) {
+                    $season->update(['status' => false]);
+                }
+                $history = History::where('season_id', $season->id)->get();
+                foreach ($history as $item) {
+                    $level = Level::where('id', $item->level_id)->first();
+                    $new_poin =$item->poin - ($level?->reset_point ?? 0);
+                    History::create([
+                        'id' => Uuid::uuid7(),
+                        'user_id' => $item->user_id,
+                        'level_id' => $item->level_id,
+                        'season_id' => $activeSeason->id,
+                        'poin' => $new_poin,
+                        'created_at' => now(),
+                    ]);
+                }
+
+                $activeSeason->update(['status' => true]);
             }
 
-            $activeSeason->update(['status' => true]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
         }
     }
 }

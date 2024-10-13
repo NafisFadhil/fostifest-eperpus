@@ -31,30 +31,6 @@ class HomeController extends Controller
 
     public function data(Request $request)
     {
-        $query = Attendance::select('tb_attendance.*');
-        $query->whereMonth('date_in', Carbon::now());
-        $query->where('user_id', auth()->user()->id);
-
-        $query->orderBy('date_in', 'desc');
-        $absen = $query->get();
-        if (!$absen->isEmpty()) {
-            foreach ($absen as $item) {
-                $in = Carbon::parse($item->date_in);
-                $out = Carbon::parse($item->date_out ?? $item->date_in);
-
-                $item->duration = $in->diff($out)->format("%h Jam %i Menit %s Detik");
-                $item->student_name = $item->user->name;
-                $item->date_attendance = Carbon::parse($item->date_in)->isoFormat('D MMMM Y');
-                $item->hour_in = Carbon::parse($item->date_in)->format('H:i:s');
-                $item->hour_out = $item->date_out ? Carbon::parse($item->date_out)->format('H:i:s') : '-';
-            }
-        }
-
-
-        return response()->json([
-            'status' => true,
-            'data' => $absen
-        ]);
     }
     public function dataAdmin(Request $request)
     {

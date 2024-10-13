@@ -10,6 +10,21 @@
 
 @section('content_body')
     <p>Selamat datang {{ auth()->user()->name }}.</p>
+
+    <div class="mt-4">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                      Buku Dipinjam Terbanyak
+                    </div>
+                    <div class="card-body">
+                      
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 {{-- Push extra CSS --}}
