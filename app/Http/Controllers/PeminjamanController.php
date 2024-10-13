@@ -63,8 +63,8 @@ class PeminjamanController extends Controller
                 $item->borrow_date = $item->borrow_date ?? 'Belum Dipinjam';
                 $item->return_date = $item->return_date ?? 'Belum Dikembalikan';
 				$buttonHtml =
-					'<a href="' . route('peminjaman.edit', $item->id) . '" class="btn btn-icon btn-warning btn-sm mx-1" title="Edit Data"><i class="fas fa-edit"></i></a>'
-					. '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->book_code . '" class="btn btn-icon btn-danger btn-sm mx-1 btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></button>'
+
+					 '<button type="button" data-id="' . $item->id . '" data-nama="' . $item->book_code . '" class="btn btn-icon btn-danger btn-sm mx-1 btn-hapus" title="Hapus Data"><i class="fas fa-trash"></i></button>'
 					. $button_borrow
 					. $button_return
                     . $button_review;
