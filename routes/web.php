@@ -106,12 +106,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('master-peminjaman', App\Http\Controllers\PeminjamanController::class)->names([
         'index' => 'peminjaman.index',
-        'create' => 'peminjaman.create',
-        'edit' => 'peminjaman.edit',
-        'store' => 'peminjaman.store',
-        'update' => 'peminjaman.update',
         'destroy' => 'peminjaman.delete',
-    ])->except('show', 'return', 'borrow', 'poin', 'poinUpdate');
+    ])->except('show', 'create', 'edit', 'store', 'update');
 
     Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
