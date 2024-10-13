@@ -29,7 +29,7 @@ const MyBook = ({ auth, loans, message }: Props) => {
                     {/* Book Cards */}
                     <div className="w-full flex flex-col justify-stretch items-stretch overflow-auto gap-y-4">
                         {loans.map((data: object, i: number) => {
-                            return data.status > 1 ? null : (
+                            return (
                                 <a
                                     href={"/peminjaman/" + data.id}
                                     className="flex-1 w-full relative prose max-w-none"
